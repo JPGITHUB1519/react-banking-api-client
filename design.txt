@@ -1,0 +1,58 @@
+- TransactionForm
+- AccountDetail
+  - AccountSearchForm
+- CustomerDetail
+  - CustomerSearchForm
+- AccountCard
+- AccountCardList
+  <filled with AccountCard components)
+
+
+
+Hierachy
+  - TransactionForm
+  - AccountDetail 
+    - AccountSearchForm 
+      - button
+     - CardList 
+      - AccountCard
+        - Card
+          - CardDetail
+  - CustomerDetails 
+    - CustomerSearchForm
+      - button
+    - CardList 
+      - AccountCard
+        - Card
+          - CardDetail
+
+
+
+Component Specialization Demo
+
+  SearchForm 
+    props.title 
+
+  AccountSearchForm
+    return <SearchForm title="Account Number: " />
+  
+  CustomerSearchForm
+  return <SearchForm title="Customer Id: />
+
+ReusableComponents:
+  Button
+  Card
+    CardDetail
+  AccountCard
+  CardList
+  AccountCardList use composition specialization from Card
+ 
+  SearchForm?
+
+
+
+Step3 - State Representation
+
+amount
+transferorAccount
+transfereeAccount
