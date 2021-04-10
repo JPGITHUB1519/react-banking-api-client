@@ -25,6 +25,11 @@ class CustomerDetail extends React.Component {
 
   async handleSearchClick() {
     const id = this.state.searchValue;
+    if (!id) {
+      alert('CustomerId cannot be empty');
+      return;
+    }
+
     const customerData = await APIUtils.getCustomerById(id);
     
     if (customerData && !customerData.error) {

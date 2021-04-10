@@ -17,7 +17,13 @@ class AccountDetail extends React.Component {
   }
 
   async handleSearchClick() {
-    const account = await APIUtils.getAccountById(this.state.searchValue);
+    const id = this.state.searchValue;
+    if (!id) {
+      alert('Account number cannot be empty');
+      return;
+    }
+
+    const account = await APIUtils.getAccountById(id);
     if (account && !account.error) {
       this.setState({
         accounts: [account],
@@ -40,8 +46,8 @@ class AccountDetail extends React.Component {
 
   render() {
     return (
-      <div class="section">
-        <h2 class="section-title">Account Detail</h2>
+      <div className="section">
+        <h2 className="section-title">Account Detail</h2>
         <AccountSearchForm onSearchValueChange={this.handleSearchValueChange} onSearchClick={this.handleSearchClick} />
         
         {/* {this.state.accounts.length > 0 */}

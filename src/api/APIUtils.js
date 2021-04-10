@@ -18,4 +18,16 @@ export async function getAccountsByCustomerId(id) {
   return json;
 }
 
+export async function transferMoney(amount, transferorId, transfereeId) {
+  const response = await fetch(`${API_URL}/transactions`, {
+    method: 'post',
+    body: JSON.stringify({
+      amount: amount,
+      transferorAccountId: transferorId,
+      transfereeAccountId: transfereeId
+    })
+  });
+  const json = await response.json();
+  return json;
+}
 
