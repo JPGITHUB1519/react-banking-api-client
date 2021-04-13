@@ -1,0 +1,72 @@
+/* Alerts */
+.alert {
+  padding: 10px;
+  position: relative;
+  border-radius: 3px;
+  width: 100%;
+  text-align: center;
+}
+
+.alert__close {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: inherit;
+  border: 0;
+  cursor: pointer;
+  font-size: 25px;
+  padding: 5px 10px;
+  position: absolute;
+  outline: none;
+  right: 0;
+  top: 0;
+}
+
+.alert--primary {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+}
+
+.alert--secondary {
+  color: #383d41;
+  background-color: #e2e3e5;
+  border-color: #d6d8db;
+}
+
+.alert--success {
+  color: #155724;
+  background: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert--danger {
+  color: #721c24;
+  background: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert--warning {
+  color: #856404;
+  background: #fff3cd;
+  border-color: #ffeeba;
+}
+
+.alert--info {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.alert--light {
+  color: #818182;
+  background: #fefefe;
+  border-color: #fdfdfe;
+}
+
+.alert--dark {
+  color: #1b1e21;
+  background: #d6d8d9;
+  border: #c6c8ca;
+}
+
+

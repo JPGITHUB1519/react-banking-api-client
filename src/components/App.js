@@ -1,4 +1,5 @@
 import TransactionForm from './TransactionForm';
+import Alert from './alert/Alert'
 import CardList from './CardList';
 import AccountCard from './AccountCard';
 import SearchForm from './SearchForm';
@@ -34,6 +35,20 @@ function App() {
       <TransactionForm />
       <AccountDetail accountsData={accountsData} />
       <CustomerDetail customerData={customerData} accountsData={accountsData} />
+      <Alert type="dark" show={false}>
+        Hello World
+        <p>lorem</p>
+        <p>lorem</p>
+        <p>lorem</p>
+        <p>lorem</p>
+        <p>lorem</p>
+        <p>lorem</p>
+        <p>lorem</p>
+        <p>lorem</p>
+        <p>lorem</p>
+        <p>lorem</p>
+        <p>lorem</p>
+      </Alert>
     </div>
   );
 }

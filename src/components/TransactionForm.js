@@ -1,6 +1,8 @@
 import React from 'react';
+import Alert from './alert/Alert';
 import PrimaryButton from './PrimaryButton';
 import * as APIUtils from '../api/APIUtils';
+import * as Utils from './Utils';
 
 class TransactionForm extends React.Component {
   constructor(props) {
@@ -8,17 +10,34 @@ class TransactionForm extends React.Component {
     this.state = {
       amount: '',
       transferorAccountId: '',
-      transfereeAccountId: ''
+      transfereeAccountId: '',
+      showAlert: true,
+      formAlert: {
+        show: false,
+        type: 'info',
+        content: ''
+      }
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleAlertCloseClick = this.handleAlertCloseClick.bind(this);
   }
 
   handleInputChange(e) {
     const target = e.target;
     this.setState({
       [target.name]: target.value
+    })
+  }
+
+  handleAlertCloseClick() {
+    this.setState(state => {
+      return {
+        formAlert: {
+          show: !state.formAlert.show
+        }
+      };
     })
   }
 
@@ -29,17 +48,39 @@ class TransactionForm extends React.Component {
 
     if (Object.keys(formValidationErrors).length === 0) {
       const transactionResult = await this.transferMoney();
+      if (transactionResult.transactionStatus === "successful") {
+        const alertDOMString = `
+          <p><strong>Successfull Transaction<strong>!</p><br>
+          ${Utils.getAlertDOMStringFromObject(transactionResult.data)}
+        `;
+        this.setState({
+          formAlert: {
+            show: true,
+            type: 'success',
+            content: alertDOMString
+          }
+        });
+      }
 
       if (transactionResult.transactionStatus === "failed") {
-        console.log('failed');
+        const alertDOMString = Utils.getAlertDOMStringFromObject(transactionResult.message);
+        this.setState({
+          formAlert: {
+            show: true,
+            type: 'danger',
+            content: alertDOMString
+          }
+        })
       }
-
-      if (transactionResult.transactionStatus === "successful") {
-        console.log('successful')
-      }
-      console.log(transactionResult);
     } else {
-      console.log(formValidationErrors);
+      const alertDOMString = Utils.getAlertDOMStringFromObject(formValidationErrors);
+      this.setState({
+        formAlert: {
+          show: true,
+          type: 'danger',
+          content: alertDOMString
+        }
+      });
     }
   }
 
@@ -101,6 +142,9 @@ class TransactionForm extends React.Component {
           </div>
           <PrimaryButton title="Transfer" onClick={this.handleClick} />
         </form>
+        <Alert type={this.state.formAlert.type} show={this.state.formAlert.show} onCloseClick={this.handleAlertCloseClick}>
+          {this.state.formAlert.content}
+        </Alert>
       </div>
     );
   }

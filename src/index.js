@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './components/alert/alert.css';
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';

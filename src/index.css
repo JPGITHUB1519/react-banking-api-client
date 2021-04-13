@@ -15,7 +15,7 @@ body {
 }
 
 .container {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .section {
@@ -103,6 +103,7 @@ body {
 .bold {
   font-weight: 700;
 }
+
 
 /* 
 ==========================================================================

@@ -1,4 +1,14 @@
-const API_URL = 'https://php-banking-api.herokuapp.com/api';
+let API_URL;
+
+if (!process.env.NODE_ENV || process.env.NODE_ENV) {
+  // development
+  API_URL = 'http://localhost:8090/php-banking-api-test-gpcuaw/project/api';
+} else {
+  // production
+  API_URL = 'https://php-banking-api.herokuapp.com/api';
+}
+
+console.log(API_URL);
 
 export async function getAccountById(id) {
   const response = await fetch(`${API_URL}/accounts/${id}`);
