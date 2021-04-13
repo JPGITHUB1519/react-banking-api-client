@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './components/card/card.css';
 import './components/alert/alert.css';
 import './index.css';
 import App from './components/App';

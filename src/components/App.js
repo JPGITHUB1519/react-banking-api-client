@@ -1,6 +1,5 @@
 import TransactionForm from './TransactionForm';
 import Alert from './alert/Alert'
-import CardList from './CardList';
 import AccountCard from './AccountCard';
 import SearchForm from './SearchForm';
 import AccountSearchForm from './AccountSearchForm';

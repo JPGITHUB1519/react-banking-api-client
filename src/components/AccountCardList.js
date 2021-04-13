@@ -1,5 +1,5 @@
 import AccountCard from './AccountCard';
-import CardList from "./CardList";
+import CardList from "./card/CardList";
 
 function AccountCardList(props) {
   return (
