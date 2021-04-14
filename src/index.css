@@ -85,19 +85,19 @@ body {
 
 /* background-buttons  */
 .button--search-bg {
-  background: url(assets/img/search.png);
+  background: url(assets/img/search.png) no-repeat;
 }
 
 .button--edit-bg {
-  background: url(assets/img/edit.png);
+  background: url(assets/img/edit.png) no-repeat;
 }
 
 .button--read-bg {
-  background: url(assets/img/form.png);
+  background: url(assets/img/form.png) no-repeat;
 }
 
 .button--delete-bg {
-  background: url(assets/img/delete.png)
+  background: url(assets/img/delete.png) no-repeat;
 }
 
 .bold {

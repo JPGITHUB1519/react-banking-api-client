@@ -42,7 +42,7 @@ function App() {
           <p>Hola Mundo</p>
         </div>     
       </Modal> */}
-      <ButtonBackground type="" onClick={() => console.log('Hello World')} />
+      <ButtonBackground type="edit" onClick={() => console.log('Hello World')} />
     </div>
   );
 }

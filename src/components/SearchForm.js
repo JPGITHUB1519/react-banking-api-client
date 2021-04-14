@@ -1,4 +1,5 @@
 import React from 'react';
+import ButtonBackground from './button/ButtonBackground';
 import ButtonPrimary from './button/ButtonPrimary';
 
 class SearchForm extends React.Component {
@@ -19,18 +20,27 @@ class SearchForm extends React.Component {
   }
 
   render() {
+    // prop.buttonType = background || text
     return (
       <React.Fragment>
         <form className="form">
           <div className="form-group">
             <label className="form-label">{this.props.title}</label>
             <input className="form-input" type="text" name="search-value" onChange={this.handleInputChange} />
+            
+            {this.props.typeOfButton === 'background' && <ButtonBackground type="search" onClick={this.handleSearchClick} />}
           </div>
-          <ButtonPrimary title="Search" onClick={this.handleSearchClick} />
+          
+          {this.props.typeOfButton === 'text' && <ButtonPrimary title="Search" onClick={this.handleSearchClick} />}
         </form>
       </React.Fragment>
     );
   }
 }
+
+
+SearchForm.defaultProps = {
+  typeOfButton: "text"
+};
 
 export default SearchForm;

@@ -8,8 +8,6 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV) {
   API_URL = 'https://php-banking-api.herokuapp.com/api';
 }
 
-console.log(API_URL);
-
 export async function getAccountById(id) {
   const response = await fetch(`${API_URL}/accounts/${id}`);
   const json = await response.json();

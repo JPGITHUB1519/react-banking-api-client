@@ -24,6 +24,7 @@ class AccountDetail extends React.Component {
     }
 
     const account = await APIUtils.getAccountById(id);
+    
     if (account && !account.error) {
       this.setState({
         accounts: [account],
