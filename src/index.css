@@ -74,8 +74,30 @@ body {
   width: 100px;
 }
 
+.button--size-small {
+  height: 50px;
+  width: 50px;
+}
+
 .button--spacing-small {
   margin: 35px auto 0;
+}
+
+/* background-buttons  */
+.button--search-bg {
+  background: url(assets/img/search.png);
+}
+
+.button--edit-bg {
+  background: url(assets/img/edit.png);
+}
+
+.button--read-bg {
+  background: url(assets/img/form.png);
+}
+
+.button--delete-bg {
+  background: url(assets/img/delete.png)
 }
 
 .bold {

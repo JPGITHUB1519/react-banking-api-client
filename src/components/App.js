@@ -6,6 +6,7 @@ import AccountSearchForm from './AccountSearchForm';
 import AccountDetail from './AccountDetail';
 import CustomerDetail from './CustomerDetail';
 import Modal from './modal/Modal';
+import ButtonBackground from './button/ButtonBackground';
 
 function App() {
   const accountsData = [
@@ -41,6 +42,7 @@ function App() {
           <p>Hola Mundo</p>
         </div>     
       </Modal> */}
+      <ButtonBackground type="" onClick={() => console.log('Hello World')} />
     </div>
   );
 }

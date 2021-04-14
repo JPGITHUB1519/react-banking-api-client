@@ -1,6 +1,6 @@
 import React from 'react';
 import Alert from './alert/Alert';
-import PrimaryButton from './PrimaryButton';
+import ButtonPrimary from './button/ButtonPrimary';
 import * as APIUtils from '../api/APIUtils';
 import * as Utils from './Utils';
 
@@ -140,7 +140,7 @@ class TransactionForm extends React.Component {
             <label>Transferee Account</label>
             <input className="form-input" type="text" name="transfereeAccountId" value={this.state.transfereeAccount} onChange={this.handleInputChange} />
           </div>
-          <PrimaryButton title="Transfer" onClick={this.handleClick} />
+          <ButtonPrimary title="Transfer" onClick={this.handleClick} />
         </form>
         <Alert type={this.state.formAlert.type} show={this.state.formAlert.show} onCloseClick={this.handleAlertCloseClick}>
           {this.state.formAlert.content}

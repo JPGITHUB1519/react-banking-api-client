@@ -1,5 +1,5 @@
 import React from 'react';
-import PrimaryButton from './PrimaryButton';
+import ButtonPrimary from './button/ButtonPrimary';
 
 class SearchForm extends React.Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class SearchForm extends React.Component {
             <label className="form-label">{this.props.title}</label>
             <input className="form-input" type="text" name="search-value" onChange={this.handleInputChange} />
           </div>
-          <PrimaryButton title="Search" onClick={this.handleSearchClick} />
+          <ButtonPrimary title="Search" onClick={this.handleSearchClick} />
         </form>
       </React.Fragment>
     );
