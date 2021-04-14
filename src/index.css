@@ -3,7 +3,6 @@
 Styles Reset
 ========================================================================== 
 */
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -13,6 +12,11 @@ Styles Reset
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+/* initial helper style */
+/* .app > div {
+  margin-top: 20px;
+} */
 
 .container {
   /* text-align: center; */
@@ -74,10 +78,6 @@ body {
   margin: 35px auto 0;
 }
 
-.app > div {
-  margin-top: 20px;
-}
-
 .bold {
   font-weight: 700;
 }
@@ -97,11 +97,6 @@ Responsive Media Queries
 
   .form--big {
     width: 80%;
-  }
-
-  .card {
-    width: 40%;
-    margin-right: 20px;
   }
 }
 

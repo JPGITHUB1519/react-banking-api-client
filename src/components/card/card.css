@@ -18,3 +18,28 @@
 .card-detail {
   margin-top: 15px;
 }
+
+/* 
+==========================================================================
+Responsive Media Queries
+========================================================================== 
+*/
+
+/* Medium devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .card {
+    width: 40%;
+    margin-right: 20px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}
+

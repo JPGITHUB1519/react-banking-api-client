@@ -5,6 +5,7 @@ import SearchForm from './SearchForm';
 import AccountSearchForm from './AccountSearchForm';
 import AccountDetail from './AccountDetail';
 import CustomerDetail from './CustomerDetail';
+import Modal from './modal/Modal';
 
 function App() {
   const accountsData = [
@@ -34,20 +35,12 @@ function App() {
       <TransactionForm />
       <AccountDetail accountsData={accountsData} />
       <CustomerDetail customerData={customerData} accountsData={accountsData} />
-      <Alert type="dark" show={false}>
-        Hello World
-        <p>lorem</p>
-        <p>lorem</p>
-        <p>lorem</p>
-        <p>lorem</p>
-        <p>lorem</p>
-        <p>lorem</p>
-        <p>lorem</p>
-        <p>lorem</p>
-        <p>lorem</p>
-        <p>lorem</p>
-        <p>lorem</p>
-      </Alert>
+      {/* <Modal header="Customer Crud" onCloseClick={() => console.log('Hello There')}>
+        <div>
+          <p>Hola Mundo</p>
+          <p>Hola Mundo</p>
+        </div>     
+      </Modal> */}
     </div>
   );
 }

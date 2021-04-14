@@ -12,14 +12,14 @@ class Alert extends React.Component {
   }
 
   render() {
-    if (!this.props.show) {
+    if (this.props.show !== undefined && this.props.show === false) {
       return null;
     }
-    console.log(this.props.children);
+    
     return (   
       <div className={`alert alert--${this.props.type}`}>
           {/* {this.props.children} */}
-          <span dangerouslySetInnerHTML={{__html: this.props.children}}></span>
+          <span dangerouslySetInnerHTML={{__html: this.props.children}} />
           <button className="alert__close" onClick={this.handleClick}>
           <span>&times;</span>
         </button>
