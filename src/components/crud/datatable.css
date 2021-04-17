@@ -1,0 +1,36 @@
+table, th, td {
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 20px;
+}
+
+.table-container {
+  display: flex;
+  width: 100%;
+  padding: 25px 20px;
+}
+
+.datatable {
+  width: 100%;
+}
+
+.datatable tr:nth-child(even) {
+  background-color: #eee;
+}
+
+.datatable tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.datatable--red-theme th {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+.datatable--green-theme th {
+  background-color: #4CAF50;
+  color: #fff;
+}

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import AccountCard from './AccountCard';
 import CardList from "./card/CardList";
 
@@ -17,5 +18,9 @@ function AccountCardList(props) {
     </CardList>
   );
 }
+
+AccountCardList.propTypes = {
+  accountsData: PropTypes.array
+};
 
 export default AccountCardList;

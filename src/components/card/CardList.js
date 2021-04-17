@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function CardList(props) {
   return (
     <div className="card-container">
@@ -5,5 +7,9 @@ function CardList(props) {
     </div>
   );
 }
+
+CardList.propTypes = {
+  children: PropTypes.node
+};
 
 export default CardList;

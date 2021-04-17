@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Card from './card/Card';
 import CardDetail from './card/CardDetail';
 
@@ -12,5 +13,13 @@ function AccountCard(props) {
     </Card>
   );
 }
+
+AccountCard.propTypes = {
+  balance: PropTypes.string,
+  customerId: PropTypes.number,
+  dateOpened: PropTypes.string,
+  id: PropTypes.number,
+  name: PropTypes.string
+};
 
 export default AccountCard;

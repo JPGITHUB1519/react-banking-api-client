@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AccountCardList from './AccountCardList';
 import CustomerSearchForm from './CustomerSearchForm';
 import * as APIUtils from '../api/APIUtils';
@@ -64,5 +65,7 @@ class CustomerDetail extends React.Component {
     );
   }
 }
+
+CustomerDetail.propTypes = {};
 
 export default CustomerDetail;

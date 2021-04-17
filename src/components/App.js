@@ -6,7 +6,9 @@ import AccountSearchForm from './AccountSearchForm';
 import AccountDetail from './AccountDetail';
 import CustomerDetail from './CustomerDetail';
 import Modal from './modal/Modal';
+import ButtonPrimary from './button/ButtonPrimary';
 import ButtonBackground from './button/ButtonBackground';
+import Crud from './crud/Crud';
 
 function App() {
   const accountsData = [
@@ -33,6 +35,7 @@ function App() {
 
   return (
     <div className="app container">
+      <ButtonPrimary />
       <TransactionForm />
       <AccountDetail accountsData={accountsData} />
       <CustomerDetail customerData={customerData} accountsData={accountsData} />
@@ -42,7 +45,8 @@ function App() {
           <p>Hola Mundo</p>
         </div>     
       </Modal> */}
-      <ButtonBackground type="edit" onClick={() => console.log('Hello World')} />
+      {/* <ButtonBackground type="edit" onClick={() => console.log('Hello World')} /> */}
+      <Crud title="Customer Crud  " />
     </div>
   );
 }

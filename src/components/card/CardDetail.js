@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 function CardDetail(props) {
   return (
     <p className="card-detail">
@@ -6,5 +8,13 @@ function CardDetail(props) {
     </p>
   )
 }
+
+CardDetail.propTypes = {
+  title: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
+};
 
 export default CardDetail;

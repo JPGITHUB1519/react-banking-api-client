@@ -28,6 +28,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
 }
 
 .section-title {
@@ -60,6 +61,17 @@ body {
   outline: none;
 }
 
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-container .button {
+  margin-right: 10px;
+}
+
 .button--red {
   background-color: #e74c3c;
   color: #fff;
@@ -77,6 +89,10 @@ body {
 .button--size-small {
   height: 50px;
   width: 50px;
+}
+
+.button--spacing-none {
+  margin: 0;
 }
 
 .button--spacing-small {

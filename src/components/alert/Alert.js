@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 class Alert extends React.Component {
   constructor(props) {
@@ -26,6 +27,13 @@ class Alert extends React.Component {
       </div>
     );
   }
+}
+
+Alert.propTypes = {
+  children: PropTypes.node,
+  onCloseClick: PropTypes.func,
+  show: PropTypes.bool,
+  type: PropTypes.string
 }
 
 Alert.defaultProps = {

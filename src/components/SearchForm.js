@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ButtonBackground from './button/ButtonBackground';
 import ButtonPrimary from './button/ButtonPrimary';
 
@@ -38,6 +39,11 @@ class SearchForm extends React.Component {
   }
 }
 
+SearchForm.propTypes = {
+  onSearchClick: PropTypes.func,
+  title: PropTypes.string,
+  typeOfButton: PropTypes.string,
+}
 
 SearchForm.defaultProps = {
   typeOfButton: "text"
