@@ -31,7 +31,7 @@ class Crud extends React.Component {
           <ButtonPrimary title="Add Record" spacing='none' />
           <ButtonPrimary title="Bulk Delete" spacing='none' />
         </ButtonContainer>
-        <Datatable theme="red" columns={columns} rows={rows} hideActionButtons={false} />
+        <Datatable theme="red" columns={columns} rows={rows} actionButtons={true} bulkDeleting={true} />
       </div>
     );
   }

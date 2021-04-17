@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonBackground from '../button/ButtonBackground';
+import DatatableRow from './DatatableRow';
+import CheckboxTableCell from './CheckboxTableCell';
 
 class Datatable extends React.Component {
   constructor(props) {
@@ -13,29 +15,18 @@ class Datatable extends React.Component {
         <table className={`datatable datatable--${this.props.theme}-theme`}>
           <thead>
             <tr>
+              {this.props.bulkDeleting && <th></th>}
               {this.props.columns.map(column => {
                 return <th>{column}</th>
               })}
               
-              {!this.props.hideActionButtons && <th>Actions</th>}
+              {this.props.actionButtons && <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
             {this.props.rows.map(row => {
               return (
-                <tr id={row.id}>
-                  {Object.keys(row).map(key => {
-                    return <td>{row[key]}</td>
-                  })}
-
-                  {!this.props.hideActionButtons && 
-                    <td>
-                      <ButtonBackground type="edit" onClick={() => console.log('edit')} />
-                      <ButtonBackground type="delete" onClick={() => console.log('delete')} />
-                      <ButtonBackground type="read" onClick={() => console.log('read')} />
-                    </td>
-                  }
-                </tr>
+                <DatatableRow id={row.id} rowData={row} bulkDeleting={this.props.bulkDeleting} actionButtons={this.props.actionButtons} />
               );
             })}
           </tbody>
@@ -46,14 +37,16 @@ class Datatable extends React.Component {
 }
 
 Datatable.propTypes = {
+  theme: PropTypes.string,
   columns: PropTypes.array,
-  hideActionButtons: PropTypes.bool,
   rows: PropTypes.array,
-  theme: PropTypes.string
+  actionButtons: PropTypes.bool,
+  bulkDeleting: PropTypes.bool
 }
 
 Datatable.defaultProps = {
-  hideActionButtons: false,
+  bulkDeleting: true,
+  actionButtons: true,
   theme: 'red'
 };
 
