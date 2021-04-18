@@ -54,7 +54,7 @@ class CustomerDetail extends React.Component {
     return (
       <div className="section">
         <h2 className="section-title">Customer Detail</h2>
-        <CustomerSearchForm onSearchValueChange={this.handleSearchValueChange} onSearchClick={this.handleSearchClick} />
+        <CustomerSearchForm value={this.state.searchValue} onSearchValueChange={this.handleSearchValueChange} onSearchClick={this.handleSearchClick} />
         {this.state.found && <p><span className='bold'>Name: </span> {this.state.customer.name}</p>}
         <AccountCardList accountsData={this.state.accounts} />
 

@@ -9,12 +9,13 @@ class AccountSearchForm extends React.Component {
 
   render() {
     return (
-      <SearchForm title="Account Number: " onInputChange={this.props.onSearchValueChange} onSearchClick={this.props.onSearchClick} />
+      <SearchForm title="Account Number: " value={this.props.value} onInputChange={this.props.onSearchValueChange} onSearchClick={this.props.onSearchClick} />
     );
   }
 }
 
 AccountSearchForm.propTypes = {
+  value: PropTypes.string,
   onSearchValueChange: PropTypes.func,
   onSearchClick: PropTypes.func
 };

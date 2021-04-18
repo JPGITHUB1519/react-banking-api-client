@@ -9,12 +9,13 @@ class CustomerSearchForm extends React.Component {
 
   render() {
     return (
-      <SearchForm title="CustomerId: " onInputChange={this.props.onSearchValueChange} onSearchClick={this.props.onSearchClick} />
+      <SearchForm title="CustomerId: " value={this.props.value} onInputChange={this.props.onSearchValueChange} onSearchClick={this.props.onSearchClick} />
     );
   }
 }
 
 CustomerSearchForm.propTypes = {
+  value: PropTypes.string,
   onSearchValueChange: PropTypes.func,
   onSearchClick: PropTypes.func
 };

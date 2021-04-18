@@ -8,7 +8,7 @@ class AccountDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: 'hola',
+      searchValue: '',
       notFound: false,
       accounts: []
     };
@@ -50,7 +50,7 @@ class AccountDetail extends React.Component {
     return (
       <div className="section">
         <h2 className="section-title">Account Detail</h2>
-        <AccountSearchForm onSearchValueChange={this.handleSearchValueChange} onSearchClick={this.handleSearchClick} />
+        <AccountSearchForm value={this.state.searchValue} onSearchValueChange={this.handleSearchValueChange} onSearchClick={this.handleSearchClick} />
         
         {/* {this.state.accounts.length > 0 */}
         {!this.state.notFound

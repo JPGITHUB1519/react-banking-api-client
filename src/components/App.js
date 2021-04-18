@@ -9,6 +9,7 @@ import Modal from './modal/Modal';
 import ButtonPrimary from './button/ButtonPrimary';
 import ButtonBackground from './button/ButtonBackground';
 import Crud from './crud/Crud';
+import * as CustomerApi from '../api/CustomerApi';
 
 function App() {
   const accountsData = [
@@ -46,7 +47,10 @@ function App() {
         </div>     
       </Modal> */}
       {/* <ButtonBackground type="edit" onClick={() => console.log('Hello World')} /> */}
-      <Crud title="Customer Crud  " />
+      <Crud 
+        title="Customer Crud  "
+        getData={CustomerApi.getCustomers}
+        searchData={CustomerApi.searchCustomer} />
     </div>
   );
 }

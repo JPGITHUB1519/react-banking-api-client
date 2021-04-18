@@ -27,12 +27,14 @@ class SearchForm extends React.Component {
         <form className="form">
           <div className="form-group">
             <label className="form-label">{this.props.title}</label>
-            <input className="form-input" type="text" name="search-value" onChange={this.handleInputChange} />
+            <input className="form-input" type="text" name="search-value" value={this.props.value} onChange={this.handleInputChange} />
             
-            {this.props.typeOfButton === 'background' && <ButtonBackground type="search" onClick={this.handleSearchClick} />}
+            {this.props.typeOfButton === 'background' && 
+              <ButtonBackground type="search" onClick={this.handleSearchClick} />}
           </div>
           
-          {this.props.typeOfButton === 'text' && <ButtonPrimary title="Search" onClick={this.handleSearchClick} />}
+          {this.props.typeOfButton === 'text' && 
+            <ButtonPrimary title="Search" onClick={this.handleSearchClick} />}
         </form>
       </React.Fragment>
     );
@@ -40,6 +42,8 @@ class SearchForm extends React.Component {
 }
 
 SearchForm.propTypes = {
+  value: PropTypes.string,
+  onInputChange: PropTypes.func,
   onSearchClick: PropTypes.func,
   title: PropTypes.string,
   typeOfButton: PropTypes.string,

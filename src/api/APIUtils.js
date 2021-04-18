@@ -1,4 +1,4 @@
-let API_URL;
+export let API_URL;
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV) {
   // development
@@ -38,4 +38,5 @@ export async function transferMoney(amount, transferorId, transfereeId) {
   const json = await response.json();
   return json;
 }
+
 
