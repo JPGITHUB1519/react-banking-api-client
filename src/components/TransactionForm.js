@@ -126,7 +126,7 @@ class TransactionForm extends React.Component {
 
   render() {
     return (
-      <div className="section">
+      <div className="section section--height-fullviewport">
         <h1 className="section-title">Bank Transaction</h1>
         <form className="form">
           <div className="form-group">

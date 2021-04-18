@@ -10,6 +10,7 @@ import ButtonPrimary from './button/ButtonPrimary';
 import ButtonBackground from './button/ButtonBackground';
 import Crud from './crud/Crud';
 import * as CustomerApi from '../api/CustomerApi';
+import * as AccountApi from '../api/AccountApi';
 
 function App() {
   const accountsData = [
@@ -48,9 +49,20 @@ function App() {
       </Modal> */}
       {/* <ButtonBackground type="edit" onClick={() => console.log('Hello World')} /> */}
       <Crud 
-        title="Customer Crud  "
-        getData={CustomerApi.getCustomers}
-        searchData={CustomerApi.searchCustomer} />
+        title="Customer Crud"
+        getData={CustomerApi.getData}
+        searchData={CustomerApi.searchData} 
+        actionButtons={true}
+        bulkDeleting={true}
+      />
+
+      <Crud 
+        title="Account Crud"
+        getData={AccountApi.getData}
+        actionButtons={false}
+        bulkDeleting={false}
+        // searchData={CustomerApi.searchData} 
+        />
     </div>
   );
 }

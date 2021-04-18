@@ -13,6 +13,9 @@ class Crud extends React.Component {
       data: []
     };
 
+    // columns for datatable, it is not on state because this will not change over the time 
+    this.columns = [];
+
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
   }
@@ -20,6 +23,7 @@ class Crud extends React.Component {
   async componentDidMount() {
     // using get aata method to fill the datatable
     const data = await this.props.getData();
+    this.columns = this.getColumnsFromData(data.data);
     this.setState({
       data: data.data
     });
@@ -38,18 +42,28 @@ class Crud extends React.Component {
     });
   }
 
+  getColumnsFromData(data) {
+    if (data && data[0]) {
+      const firstRecord = data[0];
+      const columns = Object.keys(firstRecord);
+      return columns;
+    }
+  
+    return [];
+  };
+
   render() {
-    const columns = ['id', 'name'];
-    const rows = [
-      {
-        id: 1,
-        name: 'jean'
-      },
-      {
-        id: 2,
-        name: 'pedro'
-      }
-    ];
+    // const columns = ['id', 'name'];
+    // const rows = [
+    //   {
+    //     id: 1,
+    //     name: 'jean'
+    //   },
+    //   {
+    //     id: 2,
+    //     name: 'pedro'
+    //   }
+    // ];
 
     return (
       <div className="section">
@@ -64,7 +78,7 @@ class Crud extends React.Component {
           <ButtonPrimary title="Add Record" spacing='none'  />
           <ButtonPrimary title="Bulk Delete" spacing='none' />
         </ButtonContainer>
-        <Datatable theme="red" columns={columns} rows={this.state.data} actionButtons={true} bulkDeleting={true} />
+        <Datatable theme="red" columns={this.columns} rows={this.state.data} actionButtons={this.props.actionButtons} bulkDeleting={this.props.bulkDeleting} />
       </div>
     );
   }
@@ -74,6 +88,13 @@ Crud.propTypes = {
   title: PropTypes.string.isRequired,
   getData: PropTypes.func,
   searchData: PropTypes.func.isRequired,
+  actionButtons: PropTypes.bool,
+  bulkDeleting: PropTypes.bool,
+};
+
+Crud.defaultProps = {
+  actionButtons: true,
+  bulkDeleting: true
 };
 
 export default Crud;                                                

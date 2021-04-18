@@ -52,7 +52,7 @@ class CustomerDetail extends React.Component {
 
   render() {
     return (
-      <div className="section">
+      <div className="section section--height-fullviewport">
         <h2 className="section-title">Customer Detail</h2>
         <CustomerSearchForm value={this.state.searchValue} onSearchValueChange={this.handleSearchValueChange} onSearchClick={this.handleSearchClick} />
         {this.state.found && <p><span className='bold'>Name: </span> {this.state.customer.name}</p>}

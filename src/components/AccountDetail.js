@@ -48,7 +48,7 @@ class AccountDetail extends React.Component {
 
   render() {
     return (
-      <div className="section">
+      <div className="section section--height-fullviewport">
         <h2 className="section-title">Account Detail</h2>
         <AccountSearchForm value={this.state.searchValue} onSearchValueChange={this.handleSearchValueChange} onSearchClick={this.handleSearchClick} />
         
