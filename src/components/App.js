@@ -13,34 +13,45 @@ import * as CustomerApi from '../api/CustomerApi';
 import * as AccountApi from '../api/AccountApi';
 
 function App() {
-  const accountsData = [
-    {
-      number: "1020202",
-      name: "Tester Account",
-      balance: 5000,
-      customerId: 1,
-      dateOpened: "2021-03-20"
-    },
-    {
-      number: "2020203",
-      name: "Tester Account 2",
-      balance: 10000,
-      customerId: 2,
-      dateOpened: "2021-04-21"
-    }
-  ];
+  // const accountsData = [
+  //   {
+  //     number: "1020202",
+  //     name: "Tester Account",
+  //     balance: 5000,
+  //     customerId: 1,
+  //     dateOpened: "2021-03-20"
+  //   },
+  //   {
+  //     number: "2020203",
+  //     name: "Tester Account 2",
+  //     balance: 10000,
+  //     customerId: 2,
+  //     dateOpened: "2021-04-21"
+  //   }
+  // ];
 
-  const customerData = {
-    id: 1,
-    name: 'Jean Urena'
+  // const customerData = {
+  //   id: 1,
+  //   name: 'Jean Urena'
+  // };
+
+  const accountsColumnMap = {
+    customer_id: 'Customer Identification',
+    id: 'Identification',
+    name: 'Short Name'
   };
+
+  // const customersColumnMap = {
+  //   name: 'full name',
+  //   id: 'identification'
+  // };
 
   return (
     <div className="app container">
       <ButtonPrimary />
       <TransactionForm />
-      <AccountDetail accountsData={accountsData} />
-      <CustomerDetail customerData={customerData} accountsData={accountsData} />
+      <AccountDetail />
+      <CustomerDetail />
       {/* <Modal header="Customer Crud" onCloseClick={() => console.log('Hello There')}>
         <div>
           <p>Hola Mundo</p>
@@ -48,6 +59,7 @@ function App() {
         </div>     
       </Modal> */}
       {/* <ButtonBackground type="edit" onClick={() => console.log('Hello World')} /> */}
+      {/* not using custom columns mapping, buttons enabled */}
       <Crud 
         title="Customer Crud"
         getData={CustomerApi.getData}
@@ -56,8 +68,10 @@ function App() {
         bulkDeleting={true}
       />
 
+      {/* using customColumns Map, extra buttons disabled */}
       <Crud 
         title="Account Crud"
+        columns={accountsColumnMap}
         getData={AccountApi.getData}
         actionButtons={false}
         bulkDeleting={false}

@@ -7,26 +7,95 @@ import CheckboxTableCell from './CheckboxTableCell';
 class Datatable extends React.Component {
   constructor(props) {
     super(props);
+
+    // columns for datatable, it is not on state because this will not change over the time 
+    // sample
+    // const columns = {
+    //   customerId: "Customer Identification",
+    //   id: "Identifier",
+    //   name: "shortName"
+    // };
+    this.columns = {};
   }
 
+  // componentDidMount() {
+  //   if (this.props.columns) {
+  //     this.columns = this.props.columns;
+  //   } else {
+  //     // props.rows is empty because as a result of the initial render of the crud component
+  //     console.log(this.props);
+  //     //this.columns = this.getColumnsFromData(this.props.rows);
+  //   }
+
+  //   console.log(this.columns);
+  // }
+
+  getColumnsFromData(data) {
+    if (data && data[0]) {
+      const firstRecord = data[0];
+      const keys = Object.keys(firstRecord);
+      let columns = {};
+      keys.forEach(key => {
+        columns[key] = key
+      });
+      return columns;
+    }
+  
+    return {};
+  };
+
   render() {
+    // sample column prop:
+    //  {
+    //   customer_id: "Customer Identification",
+    //   id: "Identifier",
+    //   name: "shortName"
+    // };
+
+    // columns prop format
+    // {
+    //   data_fielname: custom_column_title_in_datatable
+    // }
+
+    // a custom column prop allow us to:
+    //   - Set which columns should appear and which not (black list and white list columns)
+    //   - Specify the order of columns in the Datatable
+    //   - Mapping a field to a custom title
+
+    // if a custom column prop is not specified this component generates
+    // the columns automatically using the method getColumnsFromData
+    if (this.props.columns) {
+      this.columns = this.props.columns;
+    } else {
+      // props.rows is empty because as a result of the initial render of the crud component
+      this.columns = this.getColumnsFromData(this.props.rows);
+    }
+
     return (
       <div className="table-container">
         <table className={`datatable datatable--${this.props.theme}-theme`}>
           <thead>
             <tr>
               {this.props.bulkDeleting && <th></th>}
-              {this.props.columns.map(column => {
+              {Object.keys(this.columns).map(column => {
+                return <th>{this.columns[column]}</th>
+              })}
+              {/* {this.props.columns.map(column => {
                 return <th>{column}</th>
               })}
-              
+               */}
               {this.props.actionButtons && <th>Actions</th>}
             </tr>
           </thead>
           <tbody>
             {this.props.rows.map(row => {
               return (
-                <DatatableRow id={row.id} rowData={row} bulkDeleting={this.props.bulkDeleting} actionButtons={this.props.actionButtons} />
+                <DatatableRow 
+                  id={row.id} 
+                  rowData={row} 
+                  columns={this.columns}
+                  bulkDeleting={this.props.bulkDeleting} 
+                  actionButtons={this.props.actionButtons} />
               );
             })}
           </tbody>
@@ -38,7 +107,7 @@ class Datatable extends React.Component {
 
 Datatable.propTypes = {
   theme: PropTypes.string,
-  columns: PropTypes.array,
+  columns: PropTypes.object, // optional, if not provided it is generated automatically
   rows: PropTypes.array,
   actionButtons: PropTypes.bool,
   bulkDeleting: PropTypes.bool

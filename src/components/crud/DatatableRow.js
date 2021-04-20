@@ -8,8 +8,13 @@ function DatatableRow(props) {
       {props.bulkDeleting && 
         <CheckboxTableCell />
       }
-      {Object.keys(props.rowData).map(key => {
+      {/* {Object.keys(props.rowData).map(key => {
         return <td key={key}>{props.rowData[key]}</td>
+      })} */}
+      {Object.keys(props.columns).map(column => {
+        if (column in props.rowData) {
+          return <td key={column}>{props.rowData[column]}</td>
+        }
       })}
       {props.actionButtons && 
         <td>
@@ -25,6 +30,7 @@ function DatatableRow(props) {
 DatatableRow.propTypes = {
   id: PropTypes.number,
   rowData: PropTypes.object,
+  columns: PropTypes.object,
   bulkDeleting: PropTypes.bool,
   actionButtons: PropTypes.bool
 };
