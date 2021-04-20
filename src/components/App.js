@@ -73,6 +73,7 @@ function App() {
         title="Account Crud"
         columns={accountsColumnMap}
         getData={AccountApi.getData}
+        searchData={AccountApi.searchData}
         actionButtons={false}
         bulkDeleting={false}
         // searchData={CustomerApi.searchData} 
