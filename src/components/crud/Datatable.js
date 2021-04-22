@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ButtonBackground from '../button/ButtonBackground';
 import DatatableRow from './DatatableRow';
 import CheckboxTableCell from './CheckboxTableCell';
+import * as Utils from '../Utils';
 
 class Datatable extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Datatable extends React.Component {
     //   id: "Identifier",
     //   name: "shortName"
     // };
-    this.columns = {};
+    // this.columns = {};
   }
 
   // componentDidMount() {
@@ -29,20 +30,6 @@ class Datatable extends React.Component {
 
   //   console.log(this.columns);
   // }
-
-  getColumnsFromData(data) {
-    if (data && data[0]) {
-      const firstRecord = data[0];
-      const keys = Object.keys(firstRecord);
-      let columns = {};
-      keys.forEach(key => {
-        columns[key] = key
-      });
-      return columns;
-    }
-  
-    return {};
-  };
 
   render() {
     // sample column prop:
@@ -64,13 +51,17 @@ class Datatable extends React.Component {
 
     // if a custom column prop is not specified this component generates
     // the columns automatically using the method getColumnsFromData
-    if (this.props.columns) {
-      this.columns = this.props.columns;
-    } else {
-      // props.rows is empty because as a result of the initial render of the crud component
-      this.columns = this.getColumnsFromData(this.props.rows);
-    }
 
+    // avoiding perfomance issues
+    if (!this.columns) {
+      if (this.props.columns) {
+        this.columns = this.props.columns;
+      } else {
+        // props.rows is empty because as a result of the initial render of the crud component
+        this.columns = Utils.getColumnsFromData(this.props.rows);
+      }
+    }
+  
     return (
       <div className="table-container">
         <table className={`datatable datatable--${this.props.theme}-theme`}>

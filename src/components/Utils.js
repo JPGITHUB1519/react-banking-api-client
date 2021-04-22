@@ -12,3 +12,17 @@ export const getAlertDOMStringFromObject = (object) => {
   }
   return alertDOMString;
 };
+
+export const getColumnsFromData = (data) => {
+  if (data && data[0]) {
+    const firstRecord = data[0];
+    const keys = Object.keys(firstRecord);
+    let columns = {};
+    keys.forEach(key => {
+      columns[key] = key
+    });
+    return columns;
+  }
+
+  return {};
+}

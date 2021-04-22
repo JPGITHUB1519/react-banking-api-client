@@ -11,3 +11,17 @@ export const searchData = async (name) => {
   const json = await response.json();
   return json;
 }
+
+export const addData = async (name, balance, customerId) => {
+  const response = await fetch(`${API_URL}/accounts`, {
+    method: 'post',
+    body: JSON.stringify({
+      name: name,
+      balance: balance,
+      customerId: customerId
+    })
+  });
+
+  const json = await response.json();
+  return json;
+};

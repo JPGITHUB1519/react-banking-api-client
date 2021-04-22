@@ -4,13 +4,15 @@ import Datatable from './Datatable';
 import SearchForm from '../SearchForm';
 import ButtonContainer from '../button/ButtonContainer';
 import ButtonPrimary from '../button/ButtonPrimary';
+import AddRecordModal from './AddRecordModal';
+import * as Utils from '../Utils';
+import * as AccountApi from '../../api/AccountApi';
 
 class Crud extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchText: '',
-      data: []
+      searchText: ''
     };
 
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
@@ -18,7 +20,7 @@ class Crud extends React.Component {
   }
 
   async componentDidMount() {
-    // using get aata method to fill the datatable
+    // using get data method to fill the datatable
     const data = await this.props.getData();
     
     this.setState({
@@ -52,9 +54,16 @@ class Crud extends React.Component {
     //   }
     // ];
 
+    // making sure the children elements get the data on first render
+    // do not render children until the data is fullfilled after initial render (componentDidMount)
+    if (!this.state.data) {
+      return null;
+    }
+
     return (
       <div className="section">
         <h2 className="section-title">{this.props.title}</h2>
+        {/* {this.props.title === "Account Crud" && <AddRecordModal fields={Object.keys(Utils.getColumnsFromData(this.state.data))} saveDataAjax={AccountApi.addData} />} */}
         <SearchForm 
           title="Search: " 
           value={this.state.searchText} 

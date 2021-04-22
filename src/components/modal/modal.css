@@ -88,6 +88,10 @@
   margin-top: 25px;
 }
 
+.modal .form {
+  margin: 0 auto;
+}
+
 /* 
 ==========================================================================
 Responsive Media Queries
