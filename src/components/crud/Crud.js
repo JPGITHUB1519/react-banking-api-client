@@ -12,11 +12,14 @@ class Crud extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchText: ''
+      searchText: '',
+      showAddRecordModal: false
     };
 
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
+    this.handleAddRecordModalClick = this.handleAddRecordModalClick.bind(this);
+    this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
   }
 
   async componentDidMount() {
@@ -41,6 +44,20 @@ class Crud extends React.Component {
     });
   }
 
+  handleAddRecordModalClick() {
+    this.setState({
+      showAddRecordModal: true
+    })
+  }
+
+  handleCloseModalClick(modalName) {
+    if (modalName === 'addModal') {
+      this.setState({
+        showAddRecordModal: false
+      })
+    }
+  }
+
   render() {
     // const columns = ['id', 'name'];
     // const rows = [
@@ -63,7 +80,11 @@ class Crud extends React.Component {
     return (
       <div className="section">
         <h2 className="section-title">{this.props.title}</h2>
-        {/* {this.props.title === "Account Crud" && <AddRecordModal fields={Object.keys(Utils.getColumnsFromData(this.state.data))} saveDataAjax={AccountApi.addData} />} */}
+        <AddRecordModal 
+          show={this.state.showAddRecordModal} 
+          fields={Object.keys(Utils.getColumnsFromData(this.state.data))} 
+          saveDataAjax={AccountApi.addData}
+          onCloseClick={this.handleCloseModalClick.bind(this, 'addModal')} />
         <SearchForm 
           title="Search: " 
           value={this.state.searchText} 
@@ -71,7 +92,7 @@ class Crud extends React.Component {
           onSearchClick={this.handleSearchClick}
           typeOfButton="background" />
         <ButtonContainer>
-          <ButtonPrimary title="Add Record" spacing='none'  />
+          <ButtonPrimary title="Add Record" spacing='none' onClick={this.handleAddRecordModalClick} />
           <ButtonPrimary title="Bulk Delete" spacing='none' />
         </ButtonContainer>
         <Datatable theme="red" columns={this.props.columns} rows={this.state.data} actionButtons={this.props.actionButtons} bulkDeleting={this.props.bulkDeleting} />

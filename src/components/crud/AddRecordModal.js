@@ -59,7 +59,7 @@ class AddRecordModal extends React.Component {
     const inputs = this.props.fields;
 
     return (
-      <Modal header="Add New Record">
+      <Modal header="Add New Record" show={this.props.show} onCloseClick={this.props.onCloseClick}>
         <form className="form">
           {inputs.map(input => {
             return (
@@ -81,7 +81,9 @@ class AddRecordModal extends React.Component {
 }
 
 AddRecordModal.propTypes = {
-  fields: PropTypes.array  // array of fields, sample [id, name, age]
+  fields: PropTypes.array,  // array of fields, sample [id, name, age],
+  show: PropTypes.bool,
+  onCloseClick: PropTypes.func
 };
 
 export default AddRecordModal;
