@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ButtonBackground from '../button/ButtonBackground';
 import DatatableRow from './DatatableRow';
 import CheckboxTableCell from './CheckboxTableCell';
-import * as Utils from '../Utils';
+import * as Utils from '../../Utils';
 
 class Datatable extends React.Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Alert from './alert/Alert';
 import ButtonPrimary from './button/ButtonPrimary';
 import * as APIUtils from '../api/APIUtils';
-import * as Utils from './Utils';
+import * as Utils from '../Utils';
 
 class TransactionForm extends React.Component {
   constructor(props) {

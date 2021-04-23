@@ -41,6 +41,17 @@ function App() {
     name: 'Short Name'
   };
 
+  const customerFormFields = {
+    id: {
+      type: 'text',
+      disabled: true
+    },
+    name: {
+      type: 'text',
+      disabled: false
+    }
+  };
+
   // const customersColumnMap = {
   //   name: 'full name',
   //   id: 'identification'
@@ -62,6 +73,7 @@ function App() {
       {/* not using custom columns mapping, buttons enabled */}
       <Crud 
         title="Customer Crud"
+        formFields={customerFormFields}
         getData={CustomerApi.getData}
         searchData={CustomerApi.searchData} 
         actionButtons={true}
@@ -74,6 +86,7 @@ function App() {
         columns={accountsColumnMap}
         getData={AccountApi.getData}
         searchData={AccountApi.searchData}
+        saveData={AccountApi.addData}
         actionButtons={false}
         bulkDeleting={false}
         // searchData={CustomerApi.searchData} 

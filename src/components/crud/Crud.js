@@ -5,8 +5,8 @@ import SearchForm from '../SearchForm';
 import ButtonContainer from '../button/ButtonContainer';
 import ButtonPrimary from '../button/ButtonPrimary';
 import AddRecordModal from './AddRecordModal';
-import * as Utils from '../Utils';
-import * as AccountApi from '../../api/AccountApi';
+import * as Utils from '../../Utils';
+// import * as AccountApi from '../../api/AccountApi';
 
 class Crud extends React.Component {
   constructor(props) {
@@ -81,9 +81,11 @@ class Crud extends React.Component {
       <div className="section">
         <h2 className="section-title">{this.props.title}</h2>
         <AddRecordModal 
+          saveData={this.props.saveData}
           show={this.state.showAddRecordModal} 
-          fields={Object.keys(Utils.getColumnsFromData(this.state.data))} 
-          saveDataAjax={AccountApi.addData}
+          // fields={Object.keys(Utils.getColumnsFromData(this.state.data))} 
+          // if the form fields is speficated use those, if not generate it automatically
+          formFields={this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data)} 
           onCloseClick={this.handleCloseModalClick.bind(this, 'addModal')} />
         <SearchForm 
           title="Search: " 
@@ -106,6 +108,7 @@ Crud.propTypes = {
   columns: PropTypes.object,
   getData: PropTypes.func,
   searchData: PropTypes.func.isRequired,
+  saveData: PropTypes.func,
   actionButtons: PropTypes.bool,
   bulkDeleting: PropTypes.bool,
 };

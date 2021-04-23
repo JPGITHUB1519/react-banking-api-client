@@ -26,3 +26,20 @@ export const getColumnsFromData = (data) => {
 
   return {};
 }
+
+export const generateFieldsFromData = (data) => {
+  const fields = {
+
+  };
+
+  if (data && data[0]) {
+    const firstRecord = data[0];
+    for (const key in firstRecord) {      
+      fields[key] = {
+        type: 'text',
+        disabled: false
+      }
+    }
+    return fields;
+  }
+};

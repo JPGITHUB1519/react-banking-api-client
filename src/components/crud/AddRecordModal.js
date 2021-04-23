@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from '../modal/Modal';
 import ButtonPrimary from '../button/ButtonPrimary';
 
-// Dynamic fields form from Array
+// Dynamic formFields form from Array
 class AddRecordModal extends React.Component {
   constructor(props) {
     super(props);
@@ -18,16 +18,19 @@ class AddRecordModal extends React.Component {
   componentDidMount() {
     // set the initial values to empty
     const form = {};
-    this.props.fields.forEach(field => {
-      form[field] = '';
+    Object.keys(this.props.formFields).forEach(fieldName => {
+      form[fieldName] = '';
     });
+    // this.props.formFields.forEach(field => {
+    //   form[field] = '';
+    // });
     
     this.setState({
       form: form
     });
  
     // do not do this
-    // this.props.fields.forEach(field => {
+    // this.props.formFields.forEach(field => {
     //   this.setState({
     //     form: {
     //       [field]: ''
@@ -41,7 +44,9 @@ class AddRecordModal extends React.Component {
   }
 
   handleSaveClick() {
-    
+    console.log(this.state.form);
+    console.log(this.props.saveData);
+    // this.props.saveData();
   }
 
   handleChange(e) {
@@ -56,22 +61,29 @@ class AddRecordModal extends React.Component {
   }
   
   render() {
-    const inputs = this.props.fields;
+    const formFields = this.props.formFields;
+    console.log(formFields);
 
     return (
       <Modal header="Add New Record" show={this.props.show} onCloseClick={this.props.onCloseClick}>
         <form className="form">
-          {inputs.map(input => {
+          {Object.keys(formFields).map(field => {
             return (
               <div className="form-group"> 
-                <label>{input}</label>
+                <label>{field}</label>
                 {/*
                 To avoid rendering undefined at the first render(component did mount is executed after the first render)
                 we need to do a short circuit validation to avoid rendering undefined */
                 }
-                <input name={input} className="form-input" value={this.state.form[input] || ''} onChange={this.handleChange} />
+                <input 
+                  name={field} 
+                  type={formFields[field].type} 
+                  className="form-input" 
+                  value={this.state.form[field] || ''} 
+                  onChange={this.handleChange} 
+                  disabled={formFields[field].disabled} />
               </div>
-            )
+            );
           })}
         </form>
         <ButtonPrimary title="Save" onClick={this.handleSaveClick} />
@@ -81,8 +93,27 @@ class AddRecordModal extends React.Component {
 }
 
 AddRecordModal.propTypes = {
-  fields: PropTypes.array,  // array of fields, sample [id, name, age],
+  // formFields = {
+  //   name: {
+  //     type: text,
+  //     enable: true
+  //   },
+
+  //   lastName: {
+  //     type: text,
+  //     enable: true
+  //   }
+  //   age: {
+  //     type: text,
+  //     enable: true
+  //   }
+  //   status: {
+  //     type: combo,
+  //     enable: false
+  //   }
+  formFields: PropTypes.object,  // array of formFields objects
   show: PropTypes.bool,
+  saveData: PropTypes.func,
   onCloseClick: PropTypes.func
 };
 
