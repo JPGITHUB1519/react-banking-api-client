@@ -43,9 +43,21 @@ class AddRecordModal extends React.Component {
     // });
   }
 
-  handleSaveClick() {
-    console.log(this.state.form);
-    console.log(this.props.saveData);
+  async handleSaveClick() {
+    // const response = await this.props.saveData(...Object.values(this.state.form));
+    const response = await this.props.saveData(this.state.form);
+
+    if (!response.error) {
+      console.log('success');
+      console.log(response);
+    } else {
+      console.log('error');
+      console.log(response);
+    }
+
+    if (this.props.formFields) {
+
+    }
     // this.props.saveData();
   }
 
@@ -62,7 +74,6 @@ class AddRecordModal extends React.Component {
   
   render() {
     const formFields = this.props.formFields;
-    console.log(formFields);
 
     return (
       <Modal header="Add New Record" show={this.props.show} onCloseClick={this.props.onCloseClick}>

@@ -85,7 +85,7 @@ class Crud extends React.Component {
           show={this.state.showAddRecordModal} 
           // fields={Object.keys(Utils.getColumnsFromData(this.state.data))} 
           // if the form fields is speficated use those, if not generate it automatically
-          formFields={this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data)} 
+          formFields={this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data, 'camelCase')} 
           onCloseClick={this.handleCloseModalClick.bind(this, 'addModal')} />
         <SearchForm 
           title="Search: " 

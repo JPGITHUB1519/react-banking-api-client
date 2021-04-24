@@ -42,14 +42,30 @@ function App() {
   };
 
   const customerFormFields = {
-    id: {
-      type: 'text',
-      disabled: true
-    },
+    // id: {
+    //   type: 'text',
+    //   disabled: true
+    // },
     name: {
       type: 'text',
       disabled: false
     }
+  };
+
+
+  const accountFormFields = {
+    name: {
+      type: 'text',
+      disabled: false
+    },
+    balance: {
+      type: 'text',
+      disabled: false
+    },
+    customerId: {
+      type: 'text',
+      disabled: false
+    },
   };
 
   // const customersColumnMap = {
@@ -76,6 +92,7 @@ function App() {
         formFields={customerFormFields}
         getData={CustomerApi.getData}
         searchData={CustomerApi.searchData} 
+        saveData={CustomerApi.saveData}
         actionButtons={true}
         bulkDeleting={true}
       />
@@ -84,6 +101,7 @@ function App() {
       <Crud 
         title="Account Crud"
         columns={accountsColumnMap}
+        formFields={accountFormFields}
         getData={AccountApi.getData}
         searchData={AccountApi.searchData}
         saveData={AccountApi.addData}
