@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
+// Alert can render in two ways: receive HTML as prop or react elements as children
 class Alert extends React.Component {
   constructor(props) {
     super(props);
@@ -19,8 +20,8 @@ class Alert extends React.Component {
     
     return (   
       <div className={`alert alert--${this.props.type}`}>
-          {/* {this.props.children} */}
-          <span dangerouslySetInnerHTML={{__html: this.props.children}} />
+          {this.props.children}
+          {this.props.html &&  <span dangerouslySetInnerHTML={{__html: this.props.html}} /> }
           <button className="alert__close" onClick={this.handleClick}>
           <span>&times;</span>
         </button>

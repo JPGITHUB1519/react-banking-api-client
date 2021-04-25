@@ -16,7 +16,7 @@ class TransactionForm extends React.Component {
       formAlert: {
         show: false,
         type: 'info',
-        content: ''
+        content: []
       }
     };
 
@@ -48,40 +48,28 @@ class TransactionForm extends React.Component {
     const formValidationErrors = this.validateForm();
 
     if (Object.keys(formValidationErrors).length === 0) {
+      
       const transactionResult = await this.transferMoney();
+
       if (transactionResult.transactionStatus === "successful") {
-        const alertDOMString = `
-          <p><strong>Successfull Transaction<strong>!</p><br>
-          ${Utils.getAlertDOMStringFromObject(transactionResult.data)}
-        `;
+        const alertContent = [
+          <><strong>Successfull Transaction!</strong><br /><br /></>,
+          ...Utils.getJSXFromObject(transactionResult.data)
+        ];
         this.setState({
           formAlert: {
             show: true,
             type: 'success',
-            content: alertDOMString
+            content: alertContent
           }
         });
       }
 
       if (transactionResult.transactionStatus === "failed") {
-        const alertDOMString = Utils.getAlertDOMStringFromObject(transactionResult.message);
-        this.setState({
-          formAlert: {
-            show: true,
-            type: 'danger',
-            content: alertDOMString
-          }
-        })
+        this.showErrorAlert(transactionResult.message);
       }
     } else {
-      const alertDOMString = Utils.getAlertDOMStringFromObject(formValidationErrors);
-      this.setState({
-        formAlert: {
-          show: true,
-          type: 'danger',
-          content: alertDOMString
-        }
-      });
+      this.showErrorAlert(formValidationErrors);
     }
   }
 
@@ -122,6 +110,18 @@ class TransactionForm extends React.Component {
     }
 
     return errors;
+  }
+
+  showErrorAlert(errorsObject) {
+    const alertContent = Utils.getJSXFromObject(errorsObject);
+
+    this.setState({
+      formAlert: {
+        show: true,
+        type: 'danger',
+        content: alertContent
+      }
+    });
   }
 
   render() {

@@ -1,18 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../modal/Modal';
+import Alert from '../alert/Alert';
 import ButtonPrimary from '../button/ButtonPrimary';
+import * as Utils from '../../Utils';
 
 // Dynamic formFields form from Array
 class AddRecordModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      form: {}
+      form: {},
+      formAlert: {
+        show: false,
+        type: 'info',
+        content: []
+      }
     };
 
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleAlertCloseClick = this.handleAlertCloseClick.bind(this);
   }
 
   componentDidMount() {
@@ -43,22 +51,31 @@ class AddRecordModal extends React.Component {
     // });
   }
 
-  async handleSaveClick() {
+  async handleSaveClick(e) {
     // const response = await this.props.saveData(...Object.values(this.state.form));
-    const response = await this.props.saveData(this.state.form);
+    e.preventDefault();
 
-    if (!response.error) {
-      console.log('success');
-      console.log(response);
+    const formValidationErrors = this.validateForm();
+
+    if (Object.keys(formValidationErrors).length === 0) {
+      this.saveData(formValidationErrors);
     } else {
-      console.log('error');
-      console.log(response);
+      this.showErrorAlert(formValidationErrors);
     }
+    // if (this.props.formFields) {
 
-    if (this.props.formFields) {
+    // }
+  }
 
-    }
-    // this.props.saveData();
+  showErrorAlert(errorsObject) {
+    const alertContent = Utils.getJSXFromObject(errorsObject);
+      this.setState({
+        formAlert: {
+          show: true,
+          type: 'danger',
+          content: alertContent
+        }
+      });
   }
 
   handleChange(e) {
@@ -68,6 +85,67 @@ class AddRecordModal extends React.Component {
           ...previousState.form,
           [e.target.name]: e.target.value
         }
+      }
+    });
+  }
+
+  async saveData(formValidationErrors) {
+    const response = await this.props.saveData(this.state.form);
+
+    if (!response.error) {
+
+      const alertContent = [
+        <><strong><p>Record Added Succesfully!</p></strong><br/></>,
+        ...Utils.getJSXFromObject(response)
+      ];
+      
+      this.clearForm();
+
+      this.setState({
+        formAlert: {
+          show: true,
+          type: 'success',
+          content: alertContent
+        }
+      })
+    } else {
+      this.showErrorAlert(response);
+      console.log('error');
+      console.log(response);
+    }
+  } 
+
+  clearForm() {
+    // clean every form field
+    const form = {};
+    for (const key in this.state.form) {
+      form[key] = '';
+    }
+
+    this.setState({
+      form: form
+    });
+  }
+  
+  validateForm() {
+    const inputs = this.state.form;
+    const errors = {};
+
+    for (const key in inputs) {
+      if (this.props.formFields[key].isRequired) {
+        if (!inputs[key]) {
+          errors[key] = `${key} cannot be empty`;
+        }
+      }
+    }
+    
+    return errors;
+  }
+
+  handleAlertCloseClick() {
+    this.setState({
+      formAlert: {
+        show: false
       }
     });
   }
@@ -97,6 +175,10 @@ class AddRecordModal extends React.Component {
             );
           })}
         </form>
+
+        <Alert type={this.state.formAlert.type} show={this.state.formAlert.show} onCloseClick={this.handleAlertCloseClick}>
+          {this.state.formAlert.content}
+        </Alert>
         <ButtonPrimary title="Save" onClick={this.handleSaveClick} />
       </Modal>
     );

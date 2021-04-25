@@ -3,13 +3,33 @@ import startCase from "lodash/startCase";
 import snakeCase from "lodash/snakeCase";
 import kebabCase from "lodash/kebabCase";
 
+
+
+export const getJSXFromObject = (object) => {
+  const result = [];
+
+  for (const key in object) {
+    const element = 
+      <>
+        <strong>
+          {key}: {object[key]}
+        </strong>
+        <br />
+      </>;
+      
+    result.push(element);
+  }
+
+  return result;
+};
+
 /*
   const object = {id: 1, name: 'jean'}
   to
   <strong>id:</strong>:1
   <strong>name:</strong jean
 */
-export const getAlertDOMStringFromObject = (object) => {
+export const getDOMStringFromObject = (object) => {
   let alertDOMString = '';
   for (const key in object) {
     alertDOMString += `<strong>${key}: ${object[key]}</strong><br>`;
@@ -64,7 +84,8 @@ export const generateFieldsFromData = (data, fieldStringStyle="camelCase") => {
       }
       fields[fieldName] = {
         type: 'text',
-        disabled: false
+        disabled: false,
+        isRequired: true
       }
     }
 

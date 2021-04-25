@@ -56,15 +56,18 @@ function App() {
   const accountFormFields = {
     name: {
       type: 'text',
-      disabled: false
+      disabled: false,
+      isRequired: true
     },
     balance: {
       type: 'text',
-      disabled: false
+      disabled: false,
+      isRequired: true
     },
     customerId: {
       type: 'text',
-      disabled: false
+      disabled: false,
+      isRequired: true
     },
   };
 
@@ -75,7 +78,6 @@ function App() {
 
   return (
     <div className="app container">
-      <ButtonPrimary />
       <TransactionForm />
       <AccountDetail />
       <CustomerDetail />
