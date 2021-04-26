@@ -8,24 +8,6 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV) {
   API_URL = 'https://php-banking-api.herokuapp.com/api';
 }
 
-export async function getAccountById(id) {
-  const response = await fetch(`${API_URL}/accounts/${id}`);
-  const json = await response.json();
-  return json;
-}
-
-export async function getCustomerById(id) {
-  const response = await fetch(`${API_URL}/customers/${id}`);
-  const json = await response.json();
-  return json;
-}
-
-export async function getAccountsByCustomerId(id) {
-  const response = await fetch(`${API_URL}/customers/${id}/accounts`);
-  const json = await response.json();
-  return json;
-}
-
 export async function transferMoney(amount, transferorId, transfereeId) {
   const response = await fetch(`${API_URL}/transactions`, {
     method: 'post',

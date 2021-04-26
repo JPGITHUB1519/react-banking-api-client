@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AccountCardList from './AccountCardList';
 import CustomerSearchForm from './CustomerSearchForm';
+import * as CustomerApi from '../api/CustomerApi';
+import * as AccountApi from '../api/AccountApi';
 import * as APIUtils from '../api/APIUtils';
 
 class CustomerDetail extends React.Component {
@@ -31,10 +33,10 @@ class CustomerDetail extends React.Component {
       return;
     }
 
-    const customerData = await APIUtils.getCustomerById(id);
+    const customerData = await CustomerApi.findCustomer(id);
     
     if (customerData && !customerData.error) {
-      const accountData = await APIUtils.getAccountsByCustomerId(id);
+      const accountData = await AccountApi.getAccountsByCustomerId(id);
       this.setState({
         customer: customerData,
         accounts: accountData['data'],

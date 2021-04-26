@@ -5,6 +5,7 @@ import SearchForm from '../SearchForm';
 import ButtonContainer from '../button/ButtonContainer';
 import ButtonPrimary from '../button/ButtonPrimary';
 import AddRecordModal from './AddRecordModal';
+import EditRecordModal from './EditRecordModal';
 import * as Utils from '../../Utils';
 // import * as AccountApi from '../../api/AccountApi';
 
@@ -13,12 +14,14 @@ class Crud extends React.Component {
     super(props);
     this.state = {
       searchText: '',
-      showAddRecordModal: false
+      showAddRecordModal: false,
+      showEditRecordModal: false
     };
 
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleAddRecordModalClick = this.handleAddRecordModalClick.bind(this);
+    this.handleEditActionButtonClick = this.handleEditActionButtonClick.bind(this);
     this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
   }
 
@@ -50,11 +53,24 @@ class Crud extends React.Component {
     })
   }
 
+  handleEditActionButtonClick() {
+    this.setState({
+      showEditRecordModal: true
+    });
+  }
+
+
   handleCloseModalClick(modalName) {
     if (modalName === 'addModal') {
       this.setState({
         showAddRecordModal: false
       })
+    }
+
+    if (modalName === 'editModal') {
+      this.setState({
+        showEditRecordModal: false
+      });
     }
   }
 
@@ -87,6 +103,11 @@ class Crud extends React.Component {
           // if the form fields is speficated use those, if not generate it automatically
           formFields={this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data, 'camelCase')} 
           onCloseClick={this.handleCloseModalClick.bind(this, 'addModal')} />
+        
+        <EditRecordModal 
+          show={this.state.showEditRecordModal}
+          onCloseClick={this.handleCloseModalClick.bind(this, 'editModal')}
+        />
         <SearchForm 
           title="Search: " 
           value={this.state.searchText} 
@@ -97,7 +118,14 @@ class Crud extends React.Component {
           <ButtonPrimary title="Add Record" spacing='none' onClick={this.handleAddRecordModalClick} />
           <ButtonPrimary title="Bulk Delete" spacing='none' />
         </ButtonContainer>
-        <Datatable theme="red" columns={this.props.columns} rows={this.state.data} actionButtons={this.props.actionButtons} bulkDeleting={this.props.bulkDeleting} />
+        <Datatable 
+          theme="red" 
+          columns={this.props.columns} 
+          rows={this.state.data} 
+          bulkDeleting={this.props.bulkDeleting}
+          actionButtons={this.props.actionButtons} 
+          onEditActionButtonClick={this.handleEditActionButtonClick}
+        />
       </div>
     );
   }

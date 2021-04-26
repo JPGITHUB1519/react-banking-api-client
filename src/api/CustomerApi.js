@@ -6,6 +6,12 @@ export async function getData() {
   return json;
 }
 
+export async function findCustomer(id) {
+  const response = await fetch(`${API_URL}/customers/${id}`);
+  const json = await response.json();
+  return json;
+}
+
 export async function searchData(value) {
   const response = await fetch(`${API_URL}\\customers?name=${value}`);
   const json = await response.json();
@@ -19,7 +25,7 @@ export async function searchData(value) {
 // }
 export const saveData = async (data) => {
   const response = await fetch(`${API_URL}\\customers`, {
-    method: 'post',
+    method: 'POST',
     body: JSON.stringify({
       name: data.name
     })
@@ -27,5 +33,21 @@ export const saveData = async (data) => {
 
   const json = await response.json();
   return json;
-}
+};
+
+// data = {
+//   id:  <id_to_update>
+//   name: <name>
+// }
+export const updateData = async (data) => {
+  const response = await fetch(`${API_URL}\\customers\\${data.id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      name: data.name
+    })
+  });
+
+  const json = await response.json();
+  return json;
+};
 

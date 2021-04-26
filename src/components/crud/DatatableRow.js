@@ -18,7 +18,7 @@ function DatatableRow(props) {
       })}
       {props.actionButtons && 
         <td>
-          <ButtonBackground type="edit" onClick={() => console.log('edit')} />
+          <ButtonBackground type="edit" onClick={props.onEditActionButtonClick} />
           <ButtonBackground type="delete" onClick={() => console.log('delete')} />
           <ButtonBackground type="read" onClick={() => console.log('read')} />
         </td>
@@ -32,7 +32,8 @@ DatatableRow.propTypes = {
   rowData: PropTypes.object,
   columns: PropTypes.object,
   bulkDeleting: PropTypes.bool,
-  actionButtons: PropTypes.bool
+  actionButtons: PropTypes.bool,
+  onEditActionButtonClick: PropTypes.func
 };
 
 export default DatatableRow;

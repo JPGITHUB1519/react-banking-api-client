@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import * as APIUtils from '../api/APIUtils';
+import * as AccountApi from '../api/AccountApi';
 import AccountSearchForm from './AccountSearchForm';
 import AccountCardList from './AccountCardList';
 
@@ -24,7 +25,7 @@ class AccountDetail extends React.Component {
       return;
     }
 
-    const account = await APIUtils.getAccountById(id);
+    const account = await AccountApi.findAccount(id);
     
     if (account && !account.error) {
       this.setState({

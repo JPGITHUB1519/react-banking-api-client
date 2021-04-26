@@ -86,7 +86,9 @@ class Datatable extends React.Component {
                   rowData={row} 
                   columns={this.columns}
                   bulkDeleting={this.props.bulkDeleting} 
-                  actionButtons={this.props.actionButtons} />
+                  actionButtons={this.props.actionButtons}
+                  onEditActionButtonClick={this.props.onEditActionButtonClick}
+                />
               );
             })}
           </tbody>
@@ -100,8 +102,9 @@ Datatable.propTypes = {
   theme: PropTypes.string,
   columns: PropTypes.object, // optional, if not provided it is generated automatically
   rows: PropTypes.array,
+  bulkDeleting: PropTypes.bool,
   actionButtons: PropTypes.bool,
-  bulkDeleting: PropTypes.bool
+  onEditActionButtonClick: PropTypes.func
 }
 
 Datatable.defaultProps = {
