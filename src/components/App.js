@@ -48,7 +48,8 @@ function App() {
     // },
     name: {
       type: 'text',
-      disabled: false
+      disabled: false,
+      isRequired: true
     }
   };
 

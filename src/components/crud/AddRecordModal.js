@@ -69,13 +69,13 @@ class AddRecordModal extends React.Component {
 
   showErrorAlert(errorsObject) {
     const alertContent = Utils.getJSXFromObject(errorsObject);
-      this.setState({
-        formAlert: {
-          show: true,
-          type: 'danger',
-          content: alertContent
-        }
-      });
+    this.setState({
+      formAlert: {
+        show: true,
+        type: 'danger',
+        content: alertContent
+      }
+    });
   }
 
   handleChange(e) {
@@ -108,6 +108,15 @@ class AddRecordModal extends React.Component {
           content: alertContent
         }
       })
+
+      // remove alert notification after 3 seconds:
+      setTimeout(() => {
+        this.setState({
+          formAlert: {
+            show: false
+          }
+        });
+      }, 3000);
     } else {
       this.showErrorAlert(response);
       console.log('error');
