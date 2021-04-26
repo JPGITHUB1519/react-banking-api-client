@@ -34,7 +34,8 @@ Alert.propTypes = {
   children: PropTypes.node,
   onCloseClick: PropTypes.func,
   show: PropTypes.bool,
-  type: PropTypes.string
+  type: PropTypes.string,
+  html: PropTypes.string
 }
 
 Alert.defaultProps = {

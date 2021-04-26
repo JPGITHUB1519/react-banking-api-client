@@ -106,6 +106,7 @@ class Crud extends React.Component {
 Crud.propTypes = {
   title: PropTypes.string.isRequired,
   columns: PropTypes.object,
+  formFields: PropTypes.object,
   getData: PropTypes.func,
   searchData: PropTypes.func.isRequired,
   saveData: PropTypes.func,
