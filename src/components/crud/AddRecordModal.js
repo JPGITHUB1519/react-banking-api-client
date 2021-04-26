@@ -21,6 +21,7 @@ class AddRecordModal extends React.Component {
     this.handleSaveClick = this.handleSaveClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleAlertCloseClick = this.handleAlertCloseClick.bind(this);
+    this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
   }
 
   componentDidMount() {
@@ -52,7 +53,6 @@ class AddRecordModal extends React.Component {
   }
 
   async handleSaveClick(e) {
-    // const response = await this.props.saveData(...Object.values(this.state.form));
     e.preventDefault();
 
     const formValidationErrors = this.validateForm();
@@ -62,9 +62,6 @@ class AddRecordModal extends React.Component {
     } else {
       this.showErrorAlert(formValidationErrors);
     }
-    // if (this.props.formFields) {
-
-    // }
   }
 
   showErrorAlert(errorsObject) {
@@ -109,18 +106,12 @@ class AddRecordModal extends React.Component {
         }
       })
 
-      // remove alert notification after 3 seconds:
+      // remove alert notification after a few seconds:
       setTimeout(() => {
-        this.setState({
-          formAlert: {
-            show: false
-          }
-        });
-      }, 3000);
+        this.closeAlert();
+      }, 5000);
     } else {
       this.showErrorAlert(response);
-      console.log('error');
-      console.log(response);
     }
   } 
 
@@ -151,19 +142,33 @@ class AddRecordModal extends React.Component {
     return errors;
   }
 
-  handleAlertCloseClick() {
+  closeAlert() {
     this.setState({
       formAlert: {
         show: false
       }
     });
   }
+
+  handleAlertCloseClick() {
+    this.closeAlert();
+  }
+
+  handleCloseModalClick() {
+    // call custom component code on modal close click before call parent method
+    
+    // close alert before Closing Modal
+    this.closeAlert();
+
+    // call props close function
+    this.props.onCloseClick();
+  }
   
   render() {
     const formFields = this.props.formFields;
 
     return (
-      <Modal header="Add New Record" show={this.props.show} onCloseClick={this.props.onCloseClick}>
+      <Modal header="Add New Record" show={this.props.show} onCloseClick={this.handleCloseModalClick}>
         <form className="form">
           {Object.keys(formFields).map(field => {
             return (
