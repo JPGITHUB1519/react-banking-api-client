@@ -4,7 +4,7 @@ import CheckboxTableCell from './CheckboxTableCell';
 
 function DatatableRow(props) {
   return (
-    <tr id={props.id}>
+    <tr data-id={props.id}>
       {props.bulkDeleting && 
         <CheckboxTableCell />
       }

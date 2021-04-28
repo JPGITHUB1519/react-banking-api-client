@@ -6,7 +6,7 @@ import ButtonPrimary from '../button/ButtonPrimary';
 import * as Utils from '../../Utils';
 
 // Dynamic formFields form from Array
-class AddRecordModal extends React.Component {
+class CUFormModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,20 +24,20 @@ class AddRecordModal extends React.Component {
     this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // set the initial values to empty
-    const form = {};
-    Object.keys(this.props.formFields).forEach(fieldName => {
-      form[fieldName] = '';
-    });
-    // this.props.formFields.forEach(field => {
-    //   form[field] = '';
-    // });
-    
-    this.setState({
-      form: form
-    });
- 
+    let form = {};
+
+    // if the form is create, initialize the fields as empty
+    if (this.props.action === 'create') {
+      Object.keys(this.props.formFields).forEach(fieldName => {
+        form[fieldName] = '';
+      });
+      this.setState({
+        form: form
+      });
+    } 
+  
     // do not do this
     // this.props.formFields.forEach(field => {
     //   this.setState({
@@ -52,13 +52,76 @@ class AddRecordModal extends React.Component {
     // });
   }
 
+  // getRecord() {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve({
+  //         id: Math.random() * 10,
+  //         name: `tester name ${Math.random() * 10}` ,
+  //         balance: `tester name ${Math.random() * 10}`,
+  //         customerId: 1,
+  //         dateOpened: `tester name ${Math.random() * 10}`
+  //       });
+  //     }, 5000);
+  //   });
+  // }
+
+  // previous approach to fill the form with the record, network request logic in lifecycle
+  // the problem with this was that we were showing the modal before getting the data
+  // async componentDidUpdate(prevProps, prevState, snapshot) {
+  //   if (this.props.action === 'update') {
+  //     // Only do a network request if the selected record is not the same
+  //     // if the selected record is the same there is not need to make a network request again
+  //     if (prevProps.selectedRecordId != this.props.selectedRecordId) {
+  //       console.log('component did update');
+  //       let record = await this.getRecord();
+  //       // converting record keys string case
+  //       record = Utils.convertObjectKeysCase(record, 'camelCase');
+  //       const form = {};
+        
+  //       // fill the form with the record info
+  //       for (const key in record) {
+  //         form[key] = record[key];
+  //       }
+        
+  //       // updating state for filling form
+  //       this.setState({
+  //         form: form
+  //       });
+  //     }
+  //   }
+  // }
+
+  async componentDidUpdate(prevProps, prevState, snapshot) {
+    // only if the action is update
+    if (this.props.action === 'update') {
+      // we should only update state if the selected record is different from the previous selected
+      if (prevProps.selectedRecord.id !== this.props.selectedRecord.id) {
+        let record = this.props.selectedRecord;
+        // converting record keys string case
+        record = Utils.convertObjectKeysCase(record, 'camelcase');
+
+        const form = {};
+        // fill the form with the record info
+        for (const key in record) {
+          form[key] = record[key];
+        }
+        
+        // updating state for filling form
+        this.setState({
+          form: form
+        });
+      }
+    }
+  }
+
   async handleSaveClick(e) {
     e.preventDefault();
 
     const formValidationErrors = this.validateForm();
 
     if (Object.keys(formValidationErrors).length === 0) {
-      this.saveData(formValidationErrors);
+      this.create(formValidationErrors);
     } else {
       this.showErrorAlert(formValidationErrors);
     }
@@ -86,8 +149,8 @@ class AddRecordModal extends React.Component {
     });
   }
 
-  async saveData(formValidationErrors) {
-    const response = await this.props.saveData(this.state.form);
+  async create(formValidationErrors) {
+    const response = await this.props.create(this.state.form);
 
     if (!response.error) {
 
@@ -165,12 +228,32 @@ class AddRecordModal extends React.Component {
   }
   
   render() {
+    console.log(this.props.selectedRecord);
     const formFields = this.props.formFields;
+    let modalHeader = '';
+
+    if (this.props.action === 'create') {
+      modalHeader = 'Create Record';
+    } else if (this.props.action === 'update') {
+      modalHeader = 'Update Record';
+    }
 
     return (
-      <Modal header="Add New Record" show={this.props.show} onCloseClick={this.handleCloseModalClick}>
+      <Modal header={modalHeader} show={this.props.show} onCloseClick={this.handleCloseModalClick}>
         <form className="form">
           {Object.keys(formFields).map(field => {
+            // if the form is create, hide id field
+            let disableField = formFields[field].disabled;
+
+            if (this.props.action === 'create' && field === 'id') {
+              return;
+            }
+
+            // if the form is update show id field as disabled   
+            if (this.props.action === 'update' && field === 'id') {
+              disableField = true;
+            }
+
             return (
               <div className="form-group"> 
                 <label>{field}</label>
@@ -178,13 +261,14 @@ class AddRecordModal extends React.Component {
                 To avoid rendering undefined at the first render(component did mount is executed after the first render)
                 we need to do a short circuit validation to avoid rendering undefined */
                 }
+                
                 <input 
                   name={field} 
                   type={formFields[field].type} 
                   className="form-input" 
                   value={this.state.form[field] || ''} 
                   onChange={this.handleChange} 
-                  disabled={formFields[field].disabled} />
+                  disabled={disableField} />
               </div>
             );
           })}
@@ -199,7 +283,7 @@ class AddRecordModal extends React.Component {
   }
 }
 
-AddRecordModal.propTypes = {
+CUFormModal.propTypes = {
   // formFields = {
   //   name: {
   //     type: text,
@@ -218,10 +302,17 @@ AddRecordModal.propTypes = {
   //     type: combo,
   //     enable: false
   //   }
+  action: PropTypes.string,      // can be create or update
   formFields: PropTypes.object,  // array of formFields objects
   show: PropTypes.bool,
-  saveData: PropTypes.func,
-  onCloseClick: PropTypes.func
+  create: PropTypes.func,     // can be a create or update(add, edit) function
+  findById: PropTypes.func,
+  onCloseClick: PropTypes.func,
+  selectedRecord: PropTypes.object  // only for update modal
 };
 
-export default AddRecordModal;
+CUFormModal.defaultProps  = {
+  action: 'create'
+}
+
+export default CUFormModal;

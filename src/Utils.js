@@ -3,8 +3,6 @@ import startCase from "lodash/startCase";
 import snakeCase from "lodash/snakeCase";
 import kebabCase from "lodash/kebabCase";
 
-
-
 export const getJSXFromObject = (object) => {
   const result = [];
 
@@ -60,37 +58,81 @@ const pascalCase = (string) => {
 // pascalCase (CustomerId)
 // snakeCase (customer_id)
 // kebabCase (customer-id)
-export const generateFieldsFromData = (data, fieldStringStyle="camelCase") => {
+// generates a fields object from a list of records or a single recod
+export const generateFieldsFromData = (data, fieldStringCase="camelCase") => {
   const fields = {
   };
 
-  if (data && data[0]) {
-    const firstRecord = data[0];
+  if (data) {
+    let firstRecord;
+
+    // determining if the data is an array of data or a single record
+    if (data[0]) {
+      firstRecord = data[0]
+    } else {
+      firstRecord = data;
+    }
+
     for (const key in firstRecord) { 
-      let fieldName;
-      switch (fieldStringStyle) {
-        case 'camelCase':
-          fieldName = camelCase(key);
-          break;
-        case 'pascalCase':
-          fieldName = pascalCase(key);
-          break;
-        case 'snakeCase':
-          fieldName = snakeCase(key);
-          break;
-        case 'kebabCase':
-          fieldName = kebabCase(key);
-          break;
-      }
+      let fieldName = convertToCase(key, fieldStringCase);
+
       fields[fieldName] = {
         type: 'text',
         disabled: false,
-        isRequired: true
+        isRequired: false
       }
     }
 
     return fields;
   }
+};
+
+// convert the object keys case
+export const convertObjectKeysCase = (object, stringCase="camelCase") => {
+  const newObject = {};
+  Object.keys(object).forEach(key => {
+    newObject[convertToCase(key, stringCase)] = object[key];
+  });
+
+  return newObject;
+}
+
+// transform the a string case
+function convertToCase(string, stringCase="camelCase") {
+  let convertedString;
+  switch (stringCase) {
+    case 'camelCase':
+      convertedString = camelCase(string);
+      break;
+    case 'pascalCase':
+      convertedString = pascalCase(string);
+      break;
+    case 'snakeCase':
+      convertedString = snakeCase(string);
+      break;
+    case 'kebabCase':
+      convertedString = kebabCase(string);
+      break;
+    default: 
+    convertedString = camelCase(string);
+    break;
+  }
+
+  return convertedString;
+}
+
+export const slowAjaxRequest = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({
+        id: Math.random() * 10,
+        name: `tester name` ,
+        balance: `tester name ${Math.random() * 1000}`,
+        customerId: 1,
+        dateOpened: `10/20/2020`
+      });
+    }, 5000);
+  });
 };
 
 // const convertHyphenCaseToPascalCase = (string) => {

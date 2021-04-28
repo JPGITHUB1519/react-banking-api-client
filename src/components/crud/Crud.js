@@ -4,8 +4,7 @@ import Datatable from './Datatable';
 import SearchForm from '../SearchForm';
 import ButtonContainer from '../button/ButtonContainer';
 import ButtonPrimary from '../button/ButtonPrimary';
-import AddRecordModal from './AddRecordModal';
-import EditRecordModal from './EditRecordModal';
+import CUFormModal from './CURecordModal';
 import * as Utils from '../../Utils';
 // import * as AccountApi from '../../api/AccountApi';
 
@@ -14,8 +13,9 @@ class Crud extends React.Component {
     super(props);
     this.state = {
       searchText: '',
-      showAddRecordModal: false,
-      showEditRecordModal: false
+      showCreateRecordModal: false,
+      showUpdateRecordModal: false,
+      selectedRecord: {}
     };
 
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
@@ -27,7 +27,7 @@ class Crud extends React.Component {
 
   async componentDidMount() {
     // using get data method to fill the datatable
-    const data = await this.props.getData();
+    const data = await this.props.read();
     
     this.setState({
       data: data.data
@@ -41,7 +41,7 @@ class Crud extends React.Component {
   }
 
   async handleSearchClick() {
-    const data = await this.props.searchData(this.state.searchText);
+    const data = await this.props.search(this.state.searchText);
     this.setState({
       data: data.data
     });
@@ -49,13 +49,22 @@ class Crud extends React.Component {
 
   handleAddRecordModalClick() {
     this.setState({
-      showAddRecordModal: true
+      showCreateRecordModal: true
     })
   }
 
-  handleEditActionButtonClick() {
+  async handleEditActionButtonClick(e) {
+    // id of the clicked element
+    const id = e.target.closest('tr').dataset.id;
+
+    const record = await this.props.findById(id);
+    // TODO loading modal for slow ajax request
+    //const record = await Utils.slowAjaxRequest();
+
+    // showing modal after getting data
     this.setState({
-      showEditRecordModal: true
+      selectedRecord: record,
+      showUpdateRecordModal: true,
     });
   }
 
@@ -63,13 +72,13 @@ class Crud extends React.Component {
   handleCloseModalClick(modalName) {
     if (modalName === 'addModal') {
       this.setState({
-        showAddRecordModal: false
+        showCreateRecordModal: false
       })
     }
 
     if (modalName === 'editModal') {
       this.setState({
-        showEditRecordModal: false
+        showUpdateRecordModal: false
       });
     }
   }
@@ -93,19 +102,25 @@ class Crud extends React.Component {
       return null;
     }
 
+    const formFields = this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data, 'camelCase');
     return (
       <div className="section">
         <h2 className="section-title">{this.props.title}</h2>
-        <AddRecordModal 
-          saveData={this.props.saveData}
-          show={this.state.showAddRecordModal} 
+        <CUFormModal
+          action="create"
+          create={this.props.create}
+          show={this.state.showCreateRecordModal} 
           // fields={Object.keys(Utils.getColumnsFromData(this.state.data))} 
           // if the form fields is speficated use those, if not generate it automatically
-          formFields={this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data, 'camelCase')} 
+          formFields={formFields} 
           onCloseClick={this.handleCloseModalClick.bind(this, 'addModal')} />
         
-        <EditRecordModal 
-          show={this.state.showEditRecordModal}
+        <CUFormModal
+          action="update"
+          findById={this.props.findById}
+          selectedRecord={this.state.selectedRecord}
+          formFields={formFields}
+          show={this.state.showUpdateRecordModal}
           onCloseClick={this.handleCloseModalClick.bind(this, 'editModal')}
         />
         <SearchForm 
@@ -135,9 +150,10 @@ Crud.propTypes = {
   title: PropTypes.string.isRequired,
   columns: PropTypes.object,
   formFields: PropTypes.object,
-  getData: PropTypes.func,
-  searchData: PropTypes.func.isRequired,
-  saveData: PropTypes.func,
+  read: PropTypes.func,
+  findById: PropTypes.func,
+  search: PropTypes.func.isRequired,
+  create: PropTypes.func,
   actionButtons: PropTypes.bool,
   bulkDeleting: PropTypes.bool,
 };

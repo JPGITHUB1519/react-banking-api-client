@@ -92,10 +92,11 @@ function App() {
       {/* not using custom columns mapping, buttons enabled */}
       <Crud 
         title="Customer Crud"
-        formFields={customerFormFields}
-        getData={CustomerApi.getData}
-        searchData={CustomerApi.searchData} 
-        saveData={CustomerApi.saveData}
+        // formFields={customerFormFields}
+        read={CustomerApi.read}
+        findById={CustomerApi.findById}
+        search={CustomerApi.search} 
+        create={CustomerApi.create}
         actionButtons={true}
         bulkDeleting={true}
       />
@@ -104,13 +105,14 @@ function App() {
       <Crud 
         title="Account Crud"
         columns={accountsColumnMap}
-        formFields={accountFormFields}
-        getData={AccountApi.getData}
-        searchData={AccountApi.searchData}
-        saveData={AccountApi.addData}
-        actionButtons={false}
+        // formFields={accountFormFields}
+        read={AccountApi.read}
+        findById={AccountApi.findById}
+        search={AccountApi.search}
+        create={AccountApi.create}
+        // actionButtons={false}
         bulkDeleting={false}
-        // searchData={CustomerApi.searchData} 
+        // search={CustomerApi.search} 
         />
     </div>
   );

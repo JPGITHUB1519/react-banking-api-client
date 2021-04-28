@@ -1,24 +1,24 @@
 import { API_URL } from './APIUtils';
 
-export const getData = async () => {
+export const read = async () => {
   const response = await fetch(`${API_URL}/accounts`);
   const json = await response.json();
   return json;
 }
 
-export async function findAccount(id) {
+export async function findById(id) {
   const response = await fetch(`${API_URL}/accounts/${id}`);
   const json = await response.json();
   return json;
 }
 
-export const searchData = async (name) => {
+export const search = async (name) => {
   const response = await fetch(`${API_URL}/accounts?name=${name}`);
   const json = await response.json();
   return json;
 }
 
-export async function getAccountsByCustomerId(id) {
+export async function findByCustomerId(id) {
   const response = await fetch(`${API_URL}/customers/${id}/accounts`);
   const json = await response.json();
   return json;
@@ -29,7 +29,7 @@ export async function getAccountsByCustomerId(id) {
 //   balance: <balance>
 //   customerId: <customerId>
 // }
-export const addData = async (data) => {
+export const create = async (data) => {
   const response = await fetch(`${API_URL}/accounts`, {
     method: 'POST',
     body: JSON.stringify({
@@ -49,7 +49,7 @@ export const addData = async (data) => {
 //   balance: <balance>
 //   customerId: <customerId>
 // }
-export const updateData = async (data) => {
+export const update = async (data) => {
   const response = await fetch(`${API_URL}/accounts/${data.id}`, {
     method: 'PUT',
     body: JSON.stringify({

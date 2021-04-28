@@ -33,10 +33,10 @@ class CustomerDetail extends React.Component {
       return;
     }
 
-    const customerData = await CustomerApi.findCustomer(id);
+    const customerData = await CustomerApi.findById(id);
     
     if (customerData && !customerData.error) {
-      const accountData = await AccountApi.getAccountsByCustomerId(id);
+      const accountData = await AccountApi.findByCustomerId(id);
       this.setState({
         customer: customerData,
         accounts: accountData['data'],

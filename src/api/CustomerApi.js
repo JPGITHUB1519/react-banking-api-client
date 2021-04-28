@@ -1,18 +1,18 @@
 import { API_URL } from './APIUtils';
 
-export async function getData() {
+export async function read() {
   const response = await fetch(`${API_URL}\\customers`);
   const json = await response.json();
   return json;
 }
 
-export async function findCustomer(id) {
+export async function findById(id) {
   const response = await fetch(`${API_URL}/customers/${id}`);
   const json = await response.json();
   return json;
 }
 
-export async function searchData(value) {
+export async function search(value) {
   const response = await fetch(`${API_URL}\\customers?name=${value}`);
   const json = await response.json();
   return json;
@@ -23,7 +23,7 @@ export async function searchData(value) {
 // data = {
 //   name: <name>
 // }
-export const saveData = async (data) => {
+export const create = async (data) => {
   const response = await fetch(`${API_URL}\\customers`, {
     method: 'POST',
     body: JSON.stringify({
@@ -39,7 +39,7 @@ export const saveData = async (data) => {
 //   id:  <id_to_update>
 //   name: <name>
 // }
-export const updateData = async (data) => {
+export const update = async (data) => {
   const response = await fetch(`${API_URL}\\customers\\${data.id}`, {
     method: 'PUT',
     body: JSON.stringify({
