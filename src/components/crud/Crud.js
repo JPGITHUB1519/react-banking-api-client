@@ -5,6 +5,7 @@ import SearchForm from '../SearchForm';
 import ButtonContainer from '../button/ButtonContainer';
 import ButtonPrimary from '../button/ButtonPrimary';
 import CUFormModal from './CURecordModal';
+import FullScreenLoader from '../loader/FullScreenLoader';
 import * as Utils from '../../Utils';
 // import * as AccountApi from '../../api/AccountApi';
 
@@ -15,6 +16,7 @@ class Crud extends React.Component {
       searchText: '',
       showCreateRecordModal: false,
       showUpdateRecordModal: false,
+      showFullScreenLoader: false,
       selectedRecord: {}
     };
 
@@ -57,17 +59,21 @@ class Crud extends React.Component {
     // id of the clicked element
     const id = e.target.closest('tr').dataset.id;
 
+    // show full screen loader
+    this.showFullScreenLoader();
+
     const record = await this.props.findById(id);
     // TODO loading modal for slow ajax request
-    //const record = await Utils.slowAjaxRequest();
+    // const record = await Utils.slowAjaxRequest();
 
+    // hide loader
+    this.hideLoader();
     // showing modal after getting data
     this.setState({
       selectedRecord: record,
       showUpdateRecordModal: true,
     });
   }
-
 
   handleCloseModalClick(modalName) {
     if (modalName === 'addModal') {
@@ -81,6 +87,18 @@ class Crud extends React.Component {
         showUpdateRecordModal: false
       });
     }
+  }
+
+  showFullScreenLoader() {
+    this.setState({
+      showFullScreenLoader: true
+    });
+  }
+
+  hideLoader() {
+    this.setState({
+      showFullScreenLoader: false
+    })
   }
 
   render() {
@@ -103,6 +121,7 @@ class Crud extends React.Component {
     }
 
     const formFields = this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data, 'camelCase');
+
     return (
       <div className="section">
         <h2 className="section-title">{this.props.title}</h2>
@@ -141,6 +160,7 @@ class Crud extends React.Component {
           actionButtons={this.props.actionButtons} 
           onEditActionButtonClick={this.handleEditActionButtonClick}
         />
+        <FullScreenLoader show={this.state.showFullScreenLoader} />
       </div>
     );
   }

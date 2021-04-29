@@ -8,9 +8,11 @@ import CustomerDetail from './CustomerDetail';
 import Modal from './modal/Modal';
 import ButtonPrimary from './button/ButtonPrimary';
 import ButtonBackground from './button/ButtonBackground';
+import Loader from './loader/Loader';
 import Crud from './crud/Crud';
 import * as CustomerApi from '../api/CustomerApi';
 import * as AccountApi from '../api/AccountApi';
+import FullScreenLoader from './loader/FullScreenLoader';
 
 function App() {
   // const accountsData = [
@@ -52,8 +54,7 @@ function App() {
       isRequired: true
     }
   };
-
-
+  
   const accountFormFields = {
     name: {
       type: 'text',
