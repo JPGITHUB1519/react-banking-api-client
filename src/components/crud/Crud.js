@@ -124,9 +124,10 @@ class Crud extends React.Component {
 
     return (
       <div className="section">
-        <h2 className="section-title">{this.props.title}</h2>
+        <h2 className="section-title">{this.props.entityName} CRUD</h2>
         <CUFormModal
           action="create"
+          entityName={this.props.entityName}
           create={this.props.create}
           show={this.state.showCreateRecordModal} 
           // fields={Object.keys(Utils.getColumnsFromData(this.state.data))} 
@@ -136,6 +137,7 @@ class Crud extends React.Component {
         
         <CUFormModal
           action="update"
+          entityName={this.props.entityName}
           findById={this.props.findById}
           selectedRecord={this.state.selectedRecord}
           formFields={formFields}
@@ -167,7 +169,8 @@ class Crud extends React.Component {
 }
 
 Crud.propTypes = {
-  title: PropTypes.string.isRequired,
+  // title: PropTypes.string,
+  entityName: PropTypes.string.isRequired,
   columns: PropTypes.object,
   formFields: PropTypes.object,
   read: PropTypes.func,

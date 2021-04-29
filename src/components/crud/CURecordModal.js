@@ -233,9 +233,9 @@ class CUFormModal extends React.Component {
     let modalHeader = '';
 
     if (this.props.action === 'create') {
-      modalHeader = 'Create Record';
+      modalHeader = `Create ${this.props.entityName} Record`;
     } else if (this.props.action === 'update') {
-      modalHeader = 'Update Record';
+      modalHeader = `Update ${this.props.entityName} Record`;
     }
 
     return (
@@ -303,6 +303,7 @@ CUFormModal.propTypes = {
   //     enable: false
   //   }
   action: PropTypes.string,      // can be create or update
+  entityName: PropTypes.string,
   formFields: PropTypes.object,  // array of formFields objects
   show: PropTypes.bool,
   create: PropTypes.func,     // can be a create or update(add, edit) function

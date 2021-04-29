@@ -92,7 +92,8 @@ function App() {
       {/* <ButtonBackground type="edit" onClick={() => console.log('Hello World')} /> */}
       {/* not using custom columns mapping, buttons enabled */}
       <Crud 
-        title="Customer Crud"
+        // title="Customer Crud"
+        entityName="Customer"
         // formFields={customerFormFields}
         read={CustomerApi.read}
         findById={CustomerApi.findById}
@@ -104,7 +105,8 @@ function App() {
 
       {/* using customColumns Map, extra buttons disabled */}
       <Crud 
-        title="Account Crud"
+        // title="Account Crud"
+        entityName="Account"
         columns={accountsColumnMap}
         // formFields={accountFormFields}
         read={AccountApi.read}
