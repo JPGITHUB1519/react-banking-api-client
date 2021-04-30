@@ -138,6 +138,7 @@ class Crud extends React.Component {
         <CUFormModal
           action="update"
           entityName={this.props.entityName}
+          update={this.props.update}
           findById={this.props.findById}
           selectedRecord={this.state.selectedRecord}
           formFields={formFields}
@@ -173,10 +174,11 @@ Crud.propTypes = {
   entityName: PropTypes.string.isRequired,
   columns: PropTypes.object,
   formFields: PropTypes.object,
+  create: PropTypes.func,
+  update: PropTypes.func,
   read: PropTypes.func,
   findById: PropTypes.func,
   search: PropTypes.func.isRequired,
-  create: PropTypes.func,
   actionButtons: PropTypes.bool,
   bulkDeleting: PropTypes.bool,
 };

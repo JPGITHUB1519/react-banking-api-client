@@ -97,22 +97,25 @@ class CUFormModal extends React.Component {
     if (this.props.action === 'update') {
       // we should only update state if the selected record is different from the previous selected
       if (prevProps.selectedRecord.id !== this.props.selectedRecord.id) {
-        let record = this.props.selectedRecord;
-        // converting record keys string case
-        record = Utils.convertObjectKeysCase(record, 'camelcase');
-
-        const form = {};
-        // fill the form with the record info
-        for (const key in record) {
-          form[key] = record[key];
-        }
-        
-        // updating state for filling form
-        this.setState({
-          form: form
-        });
+        this.fillFormStateFromRecord(this.props.selectedRecord);
       }
     }
+  }
+  
+  // fill state form property from a record
+  fillFormStateFromRecord(record) {
+    record = Utils.convertObjectKeysCase(record, 'camelcase');
+    const form = {};
+
+    // fill the form with the record info
+    for (const key in record) {
+      form[key] = record[key];
+    }
+    
+    // updating state for filling form
+    this.setState({
+      form: form
+    });
   }
 
   async handleSaveClick(e) {
@@ -121,7 +124,13 @@ class CUFormModal extends React.Component {
     const formValidationErrors = this.validateForm();
 
     if (Object.keys(formValidationErrors).length === 0) {
-      this.create(formValidationErrors);
+      if (this.props.action === 'create') {
+        this.create(formValidationErrors);
+      }
+
+      if (this.props.action === 'update') {
+        this.update(formValidationErrors);
+      }
     } else {
       this.showErrorAlert(formValidationErrors);
     }
@@ -153,7 +162,6 @@ class CUFormModal extends React.Component {
     const response = await this.props.create(this.state.form);
 
     if (!response.error) {
-
       const alertContent = [
         <><strong><p>Record Added Succesfully!</p></strong><br/></>,
         ...Utils.getJSXFromObject(response)
@@ -170,13 +178,34 @@ class CUFormModal extends React.Component {
       })
 
       // remove alert notification after a few seconds:
-      setTimeout(() => {
-        this.closeAlert();
-      }, 5000);
+      this.closeAlert(5000);
     } else {
       this.showErrorAlert(response);
     }
   } 
+
+  async update(formValidationErrors) {
+    const response = await this.props.update(this.state.form);
+
+    if (!response.error) {
+      const alertContent = [
+        <><strong><p>Record Updated Successfully</p></strong><br /></>,
+        ...Utils.getJSXFromObject(response)
+      ];
+
+      this.setState({
+        formAlert: {
+          show: true,
+          type: 'success',
+          content: alertContent
+        }
+      });
+
+      this.closeAlert(5000);
+    } else {
+      this.showErrorAlert(response);
+    }
+  }
 
   clearForm() {
     // clean every form field
@@ -205,12 +234,22 @@ class CUFormModal extends React.Component {
     return errors;
   }
 
-  closeAlert() {
-    this.setState({
-      formAlert: {
-        show: false
-      }
-    });
+  closeAlert(timeout) {
+    if (!timeout) {
+      this.setState({
+        formAlert: {
+          show: false
+        }
+      });
+    } else {
+      setTimeout(() => {
+        this.setState({
+          formAlert: {
+            show: false
+          }
+        });
+      }, timeout);
+    }
   }
 
   handleAlertCloseClick() {
@@ -219,7 +258,6 @@ class CUFormModal extends React.Component {
 
   handleCloseModalClick() {
     // call custom component code on modal close click before call parent method
-    
     // close alert before Closing Modal
     this.closeAlert();
 
@@ -228,7 +266,6 @@ class CUFormModal extends React.Component {
   }
   
   render() {
-    console.log(this.props.selectedRecord);
     const formFields = this.props.formFields;
     let modalHeader = '';
 

@@ -78,8 +78,12 @@ export const generateFieldsFromData = (data, fieldStringCase="camelCase") => {
 
       fields[fieldName] = {
         type: 'text',
-        disabled: false,
-        isRequired: false
+        disabled: false
+      }
+
+      // id should not be required
+      if (fieldName !== 'id') {
+        fields[fieldName]['isRequired'] = true;
       }
     }
 

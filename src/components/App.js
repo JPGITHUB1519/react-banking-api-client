@@ -95,10 +95,11 @@ function App() {
         // title="Customer Crud"
         entityName="Customer"
         // formFields={customerFormFields}
+        create={CustomerApi.create}
+        update={CustomerApi.update}
         read={CustomerApi.read}
         findById={CustomerApi.findById}
         search={CustomerApi.search} 
-        create={CustomerApi.create}
         actionButtons={true}
         bulkDeleting={true}
       />
@@ -109,10 +110,11 @@ function App() {
         entityName="Account"
         columns={accountsColumnMap}
         // formFields={accountFormFields}
+        create={AccountApi.create}
+        update={AccountApi.update}
         read={AccountApi.read}
         findById={AccountApi.findById}
         search={AccountApi.search}
-        create={AccountApi.create}
         // actionButtons={false}
         bulkDeleting={false}
         // search={CustomerApi.search} 
