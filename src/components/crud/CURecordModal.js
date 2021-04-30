@@ -162,6 +162,9 @@ class CUFormModal extends React.Component {
     const response = await this.props.create(this.state.form);
 
     if (!response.error) {
+      // fill the datatable
+      this.props.fillDatatable();
+
       const alertContent = [
         <><strong><p>Record Added Succesfully!</p></strong><br/></>,
         ...Utils.getJSXFromObject(response)
@@ -188,6 +191,8 @@ class CUFormModal extends React.Component {
     const response = await this.props.update(this.state.form);
 
     if (!response.error) {
+      this.props.fillDatatable();
+
       const alertContent = [
         <><strong><p>Record Updated Successfully</p></strong><br /></>,
         ...Utils.getJSXFromObject(response)
@@ -345,6 +350,7 @@ CUFormModal.propTypes = {
   show: PropTypes.bool,
   create: PropTypes.func,     // can be a create or update(add, edit) function
   findById: PropTypes.func,
+  fillDatatable: PropTypes.func, // fill the crud datatable function
   onCloseClick: PropTypes.func,
   selectedRecord: PropTypes.object  // only for update modal
 };

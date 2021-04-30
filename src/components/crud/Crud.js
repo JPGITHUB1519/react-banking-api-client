@@ -25,10 +25,15 @@ class Crud extends React.Component {
     this.handleAddRecordModalClick = this.handleAddRecordModalClick.bind(this);
     this.handleEditActionButtonClick = this.handleEditActionButtonClick.bind(this);
     this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
+    this.fillDatatable = this.fillDatatable.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     // using get data method to fill the datatable
+    this.fillDatatable();
+  }
+
+  async fillDatatable() {
     const data = await this.props.read();
     
     this.setState({
@@ -133,6 +138,7 @@ class Crud extends React.Component {
           // fields={Object.keys(Utils.getColumnsFromData(this.state.data))} 
           // if the form fields is speficated use those, if not generate it automatically
           formFields={formFields} 
+          fillDatatable={this.fillDatatable}
           onCloseClick={this.handleCloseModalClick.bind(this, 'addModal')} />
         
         <CUFormModal
@@ -143,6 +149,7 @@ class Crud extends React.Component {
           selectedRecord={this.state.selectedRecord}
           formFields={formFields}
           show={this.state.showUpdateRecordModal}
+          fillDatatable={this.fillDatatable}
           onCloseClick={this.handleCloseModalClick.bind(this, 'editModal')}
         />
         <SearchForm 
