@@ -123,6 +123,13 @@ body {
   font-weight: 700;
 }
 
+.loader-container {
+  margin-top: 25px;
+}
+
+.no-results-paragraph {
+  margin-top: 25px;
+}
 
 /* 
 ==========================================================================

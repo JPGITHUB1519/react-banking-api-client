@@ -6,6 +6,7 @@ import ButtonContainer from '../button/ButtonContainer';
 import ButtonPrimary from '../button/ButtonPrimary';
 import CUFormModal from './CURecordModal';
 import FullScreenLoader from '../loader/FullScreenLoader';
+import Loader from '../loader/Loader';
 import * as Utils from '../../Utils';
 // import * as AccountApi from '../../api/AccountApi';
 
@@ -13,6 +14,8 @@ class Crud extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: [],
+      isDataLoaded: false,
       searchText: '',
       showCreateRecordModal: false,
       showUpdateRecordModal: false,
@@ -28,16 +31,34 @@ class Crud extends React.Component {
     this.fillDatatable = this.fillDatatable.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // using get data method to fill the datatable
-    this.fillDatatable();
+    const response = await this.fillDatatable();
   }
 
-  async fillDatatable() {
-    const data = await this.props.read();
-    
+  async fillDatatable(searchText=null) {
+    let data;
+
     this.setState({
-      data: data.data
+      isDataLoaded: false
+    });
+
+    // if search text exists the method is called from the searchForm, else is called for the main CRUD component
+    if (!searchText) {
+      data = await this.props.read();
+    } else {
+      data = await this.props.search(searchText);
+    }
+
+    if (data.data) {
+      data = data.data;
+    } else {
+      data = [];
+    }
+
+    this.setState({
+      data: data,
+      isDataLoaded: true
     });
   }
 
@@ -48,10 +69,7 @@ class Crud extends React.Component {
   }
 
   async handleSearchClick() {
-    const data = await this.props.search(this.state.searchText);
-    this.setState({
-      data: data.data
-    });
+    this.fillDatatable(this.state.searchText);
   }
 
   handleAddRecordModalClick() {
@@ -69,10 +87,10 @@ class Crud extends React.Component {
 
     const record = await this.props.findById(id);
     // TODO loading modal for slow ajax request
-    // const record = await Utils.slowAjaxRequest();
+    // const record = await Utils.slowAjaxRequestSingle();
 
     // hide loader
-    this.hideLoader();
+    this.hideFullScreenLoader();
     // showing modal after getting data
     this.setState({
       selectedRecord: record,
@@ -100,7 +118,7 @@ class Crud extends React.Component {
     });
   }
 
-  hideLoader() {
+  hideFullScreenLoader() {
     this.setState({
       showFullScreenLoader: false
     })
@@ -121,15 +139,19 @@ class Crud extends React.Component {
 
     // making sure the children elements get the data on first render
     // do not render children until the data is fullfilled after initial render (componentDidMount)
-    if (!this.state.data) {
-      return null;
+    // if (!this.state.data) {
+    //   return null;
+    // }
+
+    let formFields = {};
+
+    if (this.state.data) {
+      formFields = this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data, 'camelCase');
     }
 
-    const formFields = this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data, 'camelCase');
-
     return (
-      <div className="section">
-        <h2 className="section-title">{this.props.entityName} CRUD</h2>
+      <div className="section" id={`${this.props.entityName}`}>
+        <h2 className="section-title">{Utils.convertToCase(this.props.entityName, 'pascalCase')} CRUD</h2>
         <CUFormModal
           action="create"
           entityName={this.props.entityName}
@@ -162,14 +184,27 @@ class Crud extends React.Component {
           <ButtonPrimary title="Add Record" spacing='none' onClick={this.handleAddRecordModalClick} />
           <ButtonPrimary title="Bulk Delete" spacing='none' />
         </ButtonContainer>
-        <Datatable 
-          theme="red" 
-          columns={this.props.columns} 
-          rows={this.state.data} 
-          bulkDeleting={this.props.bulkDeleting}
-          actionButtons={this.props.actionButtons} 
-          onEditActionButtonClick={this.handleEditActionButtonClick}
-        />
+
+        {!this.state.isDataLoaded &&
+          <div class='loader-container'>
+            <Loader />
+          </div>
+        }
+
+        {this.state.isDataLoaded && this.state.data.length > 0 &&
+          <Datatable 
+            theme="red" 
+            columns={this.props.columns} 
+            rows={this.state.data} 
+            bulkDeleting={this.props.bulkDeleting}
+            actionButtons={this.props.actionButtons} 
+            onEditActionButtonClick={this.handleEditActionButtonClick}
+          />      
+        }
+
+        {this.state.isDataLoaded && !this.state.data.length &&
+         <p className="no-results-paragraph">No results have been found.</p>
+        }
         <FullScreenLoader show={this.state.showFullScreenLoader} />
       </div>
     );

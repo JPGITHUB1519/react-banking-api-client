@@ -93,7 +93,7 @@ function App() {
       {/* not using custom columns mapping, buttons enabled */}
       <Crud 
         // title="Customer Crud"
-        entityName="Customer"
+        entityName="customer"
         // formFields={customerFormFields}
         create={CustomerApi.create}
         update={CustomerApi.update}
@@ -107,7 +107,7 @@ function App() {
       {/* using customColumns Map, extra buttons disabled */}
       <Crud 
         // title="Account Crud"
-        entityName="Account"
+        entityName="account"
         columns={accountsColumnMap}
         // formFields={accountFormFields}
         create={AccountApi.create}

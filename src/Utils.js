@@ -102,7 +102,7 @@ export const convertObjectKeysCase = (object, stringCase="camelCase") => {
 }
 
 // transform the a string case
-function convertToCase(string, stringCase="camelCase") {
+export function convertToCase(string, stringCase="camelCase") {
   let convertedString;
   switch (stringCase) {
     case 'camelCase':
@@ -125,7 +125,7 @@ function convertToCase(string, stringCase="camelCase") {
   return convertedString;
 }
 
-export const slowAjaxRequest = () => {
+export const slowAjaxRequestSingle = (timeout=5000) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({
@@ -135,9 +135,34 @@ export const slowAjaxRequest = () => {
         customerId: 1,
         dateOpened: `10/20/2020`
       });
-    }, 5000);
+    }, timeout);
   });
 };
+
+export const slowAjaxRequestMultiple = (timeout=5000) => {
+  const data = {
+    data: [
+      {
+        id: 1,
+        name: 'jean' 
+      },
+      {
+        id: 2,
+        name: 'Branded Gipson'
+      },
+      {
+        id: 3,
+        name: 'Georgina Hazel'
+      }
+    ]
+  };
+
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(data);
+    }, timeout)
+  })
+}
 
 // const convertHyphenCaseToPascalCase = (string) => {
 //   const hyphenSplit = string.split("_");
