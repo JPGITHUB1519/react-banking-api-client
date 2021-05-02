@@ -7,6 +7,7 @@ import ButtonPrimary from '../button/ButtonPrimary';
 import CUFormModal from './CURecordModal';
 import FullScreenLoader from '../loader/FullScreenLoader';
 import Loader from '../loader/Loader';
+import NotResultsFound from '../NotResultsFound';
 import * as Utils from '../../Utils';
 // import * as AccountApi from '../../api/AccountApi';
 
@@ -203,7 +204,7 @@ class Crud extends React.Component {
         }
 
         {this.state.isDataLoaded && !this.state.data.length &&
-         <p className="no-results-paragraph">No results have been found.</p>
+          <NotResultsFound />
         }
         <FullScreenLoader show={this.state.showFullScreenLoader} />
       </div>

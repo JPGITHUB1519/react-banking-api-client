@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import RecordCard from './RecordCard';
 import SearchForm from './SearchForm';
 import Loader from './loader/Loader';  
+import NotResultsFound from './NotResultsFound';
+
 import * as Utils from '../Utils';
 
 class RecordDetails extends React.Component {
@@ -78,7 +80,7 @@ class RecordDetails extends React.Component {
         }
 
         {this.state.isLoaded && Object.keys(this.state.record).length === 0 &&
-          <p className="no-results-paragraph">No results have been found.</p>
+          <NotResultsFound />
         } 
 
       </div>
