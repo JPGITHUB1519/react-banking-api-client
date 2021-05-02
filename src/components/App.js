@@ -1,10 +1,6 @@
 import TransactionForm from './TransactionForm';
 import Alert from './alert/Alert'
-import AccountCard from './AccountCard';
 import SearchForm from './SearchForm';
-import AccountSearchForm from './AccountSearchForm';
-import AccountDetail from './AccountDetail';
-import CustomerDetail from './CustomerDetail';
 import Modal from './modal/Modal';
 import ButtonPrimary from './button/ButtonPrimary';
 import ButtonBackground from './button/ButtonBackground';
@@ -12,6 +8,8 @@ import Loader from './loader/Loader';
 import Crud from './crud/Crud';
 import * as CustomerApi from '../api/CustomerApi';
 import * as AccountApi from '../api/AccountApi';
+import RecordCard from './RecordCard';
+import RecordDetails from './RecordDetails';
 import FullScreenLoader from './loader/FullScreenLoader';
 
 function App() {
@@ -81,8 +79,9 @@ function App() {
   return (
     <div className="app container">
       <TransactionForm />
-      <AccountDetail />
-      <CustomerDetail />
+      <RecordDetails entityName="Accounts" findById={AccountApi.findById} />
+      <RecordDetails entityName="Customers" findById={CustomerApi.findById} />
+
       {/* <Modal header="Customer Crud" onCloseClick={() => console.log('Hello There')}>
         <div>
           <p>Hola Mundo</p>

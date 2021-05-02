@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types';
 
-function CardDetail(props) {
+function ObjectDetail(props) {
   return (
-    <p className="card-detail">
-      <span className="bold">{props.title}</span>
+    <p className="object-detail">
+      <span className="bold">{props.title}: </span>
       <span>{props.value}</span>
     </p>
   )
 }
 
-CardDetail.propTypes = {
+ObjectDetail.propTypes = {
   title: PropTypes.string,
   value: PropTypes.oneOfType([
     PropTypes.string,
@@ -17,4 +17,4 @@ CardDetail.propTypes = {
   ])
 };
 
-export default CardDetail;
+export default ObjectDetail;

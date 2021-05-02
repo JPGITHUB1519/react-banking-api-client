@@ -2,23 +2,18 @@ import camelCase from "lodash/camelCase";
 import startCase from "lodash/startCase";
 import snakeCase from "lodash/snakeCase";
 import kebabCase from "lodash/kebabCase";
+import ObjectDetail from './components/ObjectDetail';
 
-export const getJSXFromObject = (object) => {
-  const result = [];
+// getObjectDetailsJSX
+export const getObjectDetailsJSX = (object) => {
+  // const items = Object.keys(object).map(key => {
+  //   return <p className="object-detail"><strong>{key}: </strong>{object[key]}</p>;
+  // });
 
-  for (const key in object) {
-    const element = 
-      <>
-        <strong>
-          {key}: {object[key]}
-        </strong>
-        <br />
-      </>;
-      
-    result.push(element);
-  }
-
-  return result;
+  const items = Object.keys(object).map(key => {
+    return <ObjectDetail title={key} value={object[key]} />
+  })
+  return items;
 };
 
 /*

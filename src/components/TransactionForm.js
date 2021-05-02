@@ -54,7 +54,7 @@ class TransactionForm extends React.Component {
       if (transactionResult.transactionStatus === "successful") {
         const alertContent = [
           <><strong>Successfull Transaction!</strong><br /><br /></>,
-          ...Utils.getJSXFromObject(transactionResult.data)
+          ...Utils.getObjectDetailsJSX(transactionResult.data)
         ];
         this.setState({
           formAlert: {
@@ -113,7 +113,7 @@ class TransactionForm extends React.Component {
   }
 
   showErrorAlert(errorsObject) {
-    const alertContent = Utils.getJSXFromObject(errorsObject);
+    const alertContent = Utils.getObjectDetailsJSX(errorsObject);
 
     this.setState({
       formAlert: {

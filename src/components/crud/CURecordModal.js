@@ -137,7 +137,7 @@ class CUFormModal extends React.Component {
   }
 
   showErrorAlert(errorsObject) {
-    const alertContent = Utils.getJSXFromObject(errorsObject);
+    const alertContent = Utils.getObjectDetailsJSX(errorsObject);
     this.setState({
       formAlert: {
         show: true,
@@ -167,7 +167,7 @@ class CUFormModal extends React.Component {
 
       const alertContent = [
         <><strong><p>Record Added Succesfully!</p></strong><br/></>,
-        ...Utils.getJSXFromObject(response)
+        ...Utils.getObjectDetailsJSX(response)
       ];
       
       this.clearForm();
@@ -195,7 +195,7 @@ class CUFormModal extends React.Component {
 
       const alertContent = [
         <><strong><p>Record Updated Successfully</p></strong><br /></>,
-        ...Utils.getJSXFromObject(response)
+        ...Utils.getObjectDetailsJSX(response)
       ];
 
       this.setState({
