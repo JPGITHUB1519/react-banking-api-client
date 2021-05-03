@@ -31,6 +31,7 @@ class Crud extends React.Component {
     this.handleAddRecordModalClick = this.handleAddRecordModalClick.bind(this);
     this.handleEditActionButtonClick = this.handleEditActionButtonClick.bind(this);
     this.handleViewActionButtonClick = this.handleViewActionButtonClick.bind(this);
+    this.handleDeleteActionButtonClick = this.handleDeleteActionButtonClick.bind(this);
     this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
     this.fillDatatable = this.fillDatatable.bind(this);
   }
@@ -117,6 +118,27 @@ class Crud extends React.Component {
     });
   }
 
+  async handleDeleteActionButtonClick(e) {
+    const id = this.getSelectedRecordId(e);
+
+    const userConfirmation = window.confirm(`Are you sure you want to delete this ${this.props.entityName} with id: ${id}?`);
+
+    if (userConfirmation) {
+      const deleteStatusCode = await this.props.delete(id);
+
+      if (deleteStatusCode === 204) {
+        this.fillDatatable();
+        // this message can be a little annoying, let's notify only when there is an error
+        // alert(`${this.props.entityName} with id: ${id} deleted succesfully`);
+      }
+
+      if (deleteStatusCode === 404) {
+        alert(`Failed to delete ${this.props.entityName} with id: ${id}, 404 Record not found`);
+      }
+    }
+  }
+
+
   handleCloseModalClick(modalName) {
     if (modalName === 'addModal') {
       this.setState({
@@ -137,7 +159,6 @@ class Crud extends React.Component {
     }
   }
   
-
   getSelectedRecordId(e) {
     const id = e.target.closest('tr').dataset.id;
     return id;
@@ -237,6 +258,7 @@ class Crud extends React.Component {
             actionButtons={this.props.actionButtons} 
             onEditActionButtonClick={this.handleEditActionButtonClick}
             onViewActionButtonClick={this.handleViewActionButtonClick}
+            onDeleteActionButtonClick={this.handleDeleteActionButtonClick}
           />      
         }
 
@@ -258,6 +280,7 @@ Crud.propTypes = {
   update: PropTypes.func,
   read: PropTypes.func,
   findById: PropTypes.func,
+  delete: PropTypes.func,
   search: PropTypes.func.isRequired,
   actionButtons: PropTypes.bool,
   bulkDeleting: PropTypes.bool,

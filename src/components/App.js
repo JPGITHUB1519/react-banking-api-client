@@ -99,6 +99,7 @@ function App() {
         read={CustomerApi.read}
         findById={CustomerApi.findById}
         search={CustomerApi.search} 
+        delete={CustomerApi.remove}
         actionButtons={true}
         bulkDeleting={true}
       />
@@ -114,6 +115,7 @@ function App() {
         read={AccountApi.read}
         findById={AccountApi.findById}
         search={AccountApi.search}
+        delete={AccountApi.remove}
         // actionButtons={false}
         bulkDeleting={false}
         // search={CustomerApi.search} 

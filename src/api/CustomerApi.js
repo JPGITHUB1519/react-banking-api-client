@@ -51,3 +51,13 @@ export const update = async (data) => {
   return json;
 };
 
+// delete is a reserved word so it cannot be used as a variable name
+// 204 if succesful, 404 if the record was not found
+export const remove = async (id) => {
+  const response = await fetch(`${API_URL}\\customers\\${id}`, {
+    method: "delete"
+  });
+
+  return response.status;
+};
+

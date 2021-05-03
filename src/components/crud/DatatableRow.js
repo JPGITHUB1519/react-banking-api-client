@@ -19,7 +19,7 @@ function DatatableRow(props) {
       {props.actionButtons && 
         <td>
           <ButtonBackground type="edit" onClick={props.onEditActionButtonClick} />
-          <ButtonBackground type="delete" onClick={() => console.log('delete')} />
+          <ButtonBackground type="delete" onClick={props.onDeleteActionButtonClick} />
           <ButtonBackground type="read" onClick={props.onViewActionButtonClick} />
         </td>
       }

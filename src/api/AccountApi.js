@@ -62,3 +62,11 @@ export const update = async (data) => {
   const json = await response.json();
   return json;
 };
+
+export const remove = async (id) => {
+  const response = await fetch(`${API_URL}\\accounts\\${id}`, {
+    method: "delete"
+  });
+
+  return response.status;
+};
