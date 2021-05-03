@@ -5,6 +5,7 @@ import SearchForm from '../SearchForm';
 import ButtonContainer from '../button/ButtonContainer';
 import ButtonPrimary from '../button/ButtonPrimary';
 import CUFormModal from './CURecordModal';
+import ViewRecordModal from './ViewRecordModal';
 import FullScreenLoader from '../loader/FullScreenLoader';
 import Loader from '../loader/Loader';
 import NotResultsFound from '../NotResultsFound';
@@ -20,6 +21,7 @@ class Crud extends React.Component {
       searchText: '',
       showCreateRecordModal: false,
       showUpdateRecordModal: false,
+      showViewRecordModal: false,
       showFullScreenLoader: false,
       selectedRecord: {}
     };
@@ -28,6 +30,7 @@ class Crud extends React.Component {
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleAddRecordModalClick = this.handleAddRecordModalClick.bind(this);
     this.handleEditActionButtonClick = this.handleEditActionButtonClick.bind(this);
+    this.handleViewActionButtonClick = this.handleViewActionButtonClick.bind(this);
     this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
     this.fillDatatable = this.fillDatatable.bind(this);
   }
@@ -81,7 +84,7 @@ class Crud extends React.Component {
 
   async handleEditActionButtonClick(e) {
     // id of the clicked element
-    const id = e.target.closest('tr').dataset.id;
+    const id = this.getSelectedRecordId(e);
 
     // show full screen loader
     this.showFullScreenLoader();
@@ -99,6 +102,21 @@ class Crud extends React.Component {
     });
   }
 
+  async handleViewActionButtonClick(e) {
+    const id = this.getSelectedRecordId(e);
+    
+    this.showFullScreenLoader();
+
+    const record = await this.props.findById(id);
+
+    this.hideFullScreenLoader();
+
+    this.setState({
+      selectedRecord: record,
+      showViewRecordModal: true
+    });
+  }
+
   handleCloseModalClick(modalName) {
     if (modalName === 'addModal') {
       this.setState({
@@ -111,6 +129,18 @@ class Crud extends React.Component {
         showUpdateRecordModal: false
       });
     }
+
+    if (modalName === 'viewModal') {
+      this.setState({
+        showViewRecordModal: false
+      });
+    }
+  }
+  
+
+  getSelectedRecordId(e) {
+    const id = e.target.closest('tr').dataset.id;
+    return id;
   }
 
   showFullScreenLoader() {
@@ -175,6 +205,12 @@ class Crud extends React.Component {
           fillDatatable={this.fillDatatable}
           onCloseClick={this.handleCloseModalClick.bind(this, 'editModal')}
         />
+        {this.state.showViewRecordModal && 
+          <ViewRecordModal 
+            record={this.state.selectedRecord} 
+            onCloseClick={this.handleCloseModalClick.bind(this, 'viewModal')}
+          />
+        }
         <SearchForm 
           title="Search: " 
           value={this.state.searchText} 
@@ -200,6 +236,7 @@ class Crud extends React.Component {
             bulkDeleting={this.props.bulkDeleting}
             actionButtons={this.props.actionButtons} 
             onEditActionButtonClick={this.handleEditActionButtonClick}
+            onViewActionButtonClick={this.handleViewActionButtonClick}
           />      
         }
 

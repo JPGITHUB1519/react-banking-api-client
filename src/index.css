@@ -135,6 +135,11 @@ body {
   margin-top: 15px;
 }
 
+.view-record {
+  display: flex;
+  justify-content: center;
+}
+
 /* 
 ==========================================================================
 Responsive Media Queries
