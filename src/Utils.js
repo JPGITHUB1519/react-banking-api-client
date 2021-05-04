@@ -86,6 +86,37 @@ export const generateFieldsFromData = (data, fieldStringCase="camelCase") => {
   }
 };
 
+// generate a checkboxes object from an array of data
+/*
+  Sample Input:
+  keyPrefix = checkbox
+  defaultValues = false
+  data = [
+    {
+      id: 5,
+      name: 'jean'
+    },
+    {
+      id: 10,
+      name: 'pedro
+    }
+  ];
+
+  // sample output:
+    {
+      checkbox5: false,
+      checkbox10: false
+    }
+*/
+export const generateCheckboxObject = (data, keyPrefix="checkbox", defaultValues=false) => {
+  const checkboxObject = {};
+  data.forEach(record => {
+    checkboxObject[`${keyPrefix}${record.id}`] = defaultValues;
+  });
+
+  return checkboxObject;
+}
+
 // convert the object keys case
 export const convertObjectKeysCase = (object, stringCase="camelCase") => {
   const newObject = {};

@@ -16,9 +16,11 @@ class Crud extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchText: '',
+      // fully controlled form checkboxes
+      checkboxes: {},
       data: [],
       isDataLoaded: false,
-      searchText: '',
       showCreateRecordModal: false,
       showUpdateRecordModal: false,
       showViewRecordModal: false,
@@ -27,6 +29,7 @@ class Crud extends React.Component {
     };
 
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
+    this.handleCheckboxValueChange = this.handleCheckboxValueChange.bind(this);
     this.handleSearchClick = this.handleSearchClick.bind(this);
     this.handleAddRecordModalClick = this.handleAddRecordModalClick.bind(this);
     this.handleEditActionButtonClick = this.handleEditActionButtonClick.bind(this);
@@ -43,6 +46,7 @@ class Crud extends React.Component {
 
   async fillDatatable(searchText=null) {
     let data;
+    let stateObject;
 
     this.setState({
       isDataLoaded: false
@@ -61,16 +65,42 @@ class Crud extends React.Component {
       data = [];
     }
 
-    this.setState({
+    stateObject = {
       data: data,
       isDataLoaded: true
-    });
+    };
+
+    // if bulk deleting is enabled create checkboxes
+    if (this.props.bulkDeleting) {
+      const checkboxesObject = Utils.generateCheckboxObject(data);
+      stateObject['checkboxes'] = checkboxesObject;
+    } 
+
+    this.setState(stateObject);
   }
 
   handleSearchValueChange(searchValue) {
     this.setState({
       searchText: searchValue
     });
+  }
+
+  handleCheckboxValueChange(e) {
+    const target = e.target;
+    const name = e.target.name;
+    
+    if (target.type === 'checkbox') {
+      const value = target.checked;
+      // shallow copy the state object
+      let checkboxesCopy = { ...this.state.checkboxes };
+
+      // do not do this because we are assigning the point to the state object
+      // let checkboxesCopy = this.state.checkboxes ;
+      checkboxesCopy[name] = value;
+      this.setState({
+        checkboxes: checkboxesCopy
+      });
+    }
   }
 
   async handleSearchClick() {
@@ -254,6 +284,8 @@ class Crud extends React.Component {
             theme="red" 
             columns={this.props.columns} 
             rows={this.state.data} 
+            checkboxes={this.state.checkboxes}
+            onCheckboxValueChange={this.handleCheckboxValueChange}
             bulkDeleting={this.props.bulkDeleting}
             actionButtons={this.props.actionButtons} 
             onEditActionButtonClick={this.handleEditActionButtonClick}

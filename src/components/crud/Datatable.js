@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonBackground from '../button/ButtonBackground';
 import DatatableRow from './DatatableRow';
-import CheckboxTableCell from './CheckboxTableCell';
 import * as Utils from '../../Utils';
 
 class Datatable extends React.Component {
@@ -85,6 +84,8 @@ class Datatable extends React.Component {
                   id={row.id} 
                   rowData={row} 
                   columns={this.columns}
+                  checkboxes={this.props.checkboxes}
+                  onCheckboxValueChange={this.props.onCheckboxValueChange}
                   bulkDeleting={this.props.bulkDeleting} 
                   actionButtons={this.props.actionButtons}
                   onEditActionButtonClick={this.props.onEditActionButtonClick}
@@ -105,15 +106,18 @@ Datatable.propTypes = {
   theme: PropTypes.string,
   columns: PropTypes.object, // optional, if not provided it is generated automatically
   rows: PropTypes.array,
+  checkboxes: PropTypes.object, // only required if bulk deleting is enabled
+  onCheckboxValueChange: PropTypes.func, // only required if bulk deleting is enabled
   bulkDeleting: PropTypes.bool,
   actionButtons: PropTypes.bool,
-  onEditActionButtonClick: PropTypes.func,
-  onViewActionButtonClick: PropTypes.func,
-  onDeleteActionButtonClick: PropTypes.func
+  onEditActionButtonClick: PropTypes.func, // only needed if actionButtons is true
+  onViewActionButtonClick: PropTypes.func, // only needed if actionButtons is true
+  onDeleteActionButtonClick: PropTypes.func // only needed if actionButtons is true
 }
 
 Datatable.defaultProps = {
   bulkDeleting: true,
+  checkboxes: {},
   actionButtons: true,
   theme: 'red'
 };

@@ -1,12 +1,18 @@
 import PropTypes from 'prop-types';
 import ButtonBackground from '../button/ButtonBackground'
-import CheckboxTableCell from './CheckboxTableCell';
 
 function DatatableRow(props) {
   return (
     <tr data-id={props.id}>
-      {props.bulkDeleting && 
-        <CheckboxTableCell />
+      {props.bulkDeleting && Object.keys(props.checkboxes).length > 0 &&
+        <td>
+          <input 
+            type="checkbox" 
+            name={`checkbox${props.id}`} 
+            checked={props.checkboxes[`checkbox${props.id}`]} 
+            onChange={props.onCheckboxValueChange}
+          />
+        </td>
       }
       {/* {Object.keys(props.rowData).map(key => {
         return <td key={key}>{props.rowData[key]}</td>
@@ -31,6 +37,8 @@ DatatableRow.propTypes = {
   id: PropTypes.number,
   rowData: PropTypes.object,
   columns: PropTypes.object,
+  checkboxes: PropTypes.object,
+  onCheckboxValueChange: PropTypes.func,
   bulkDeleting: PropTypes.bool,
   actionButtons: PropTypes.bool,
   onEditActionButtonClick: PropTypes.func,
