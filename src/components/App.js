@@ -100,6 +100,7 @@ function App() {
         findById={CustomerApi.findById}
         search={CustomerApi.search} 
         delete={CustomerApi.remove}
+        bulkDelete={CustomerApi.bulkDelete}
         actionButtons={true}
         bulkDeleting={true}
       />

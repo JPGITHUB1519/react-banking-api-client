@@ -35,6 +35,7 @@ class Crud extends React.Component {
     this.handleEditActionButtonClick = this.handleEditActionButtonClick.bind(this);
     this.handleViewActionButtonClick = this.handleViewActionButtonClick.bind(this);
     this.handleDeleteActionButtonClick = this.handleDeleteActionButtonClick.bind(this);
+    this.handleBulkDeletingButton = this.handleBulkDeletingButton.bind(this);
     this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
     this.fillDatatable = this.fillDatatable.bind(this);
   }
@@ -168,6 +169,22 @@ class Crud extends React.Component {
     }
   }
 
+  async handleBulkDeletingButton() {
+    const checkedIds = this.getCheckedRecordsIds();
+
+    if (checkedIds.length > 0) {
+      const userConfirmation = window.confirm(`Are you sure you want to delete the selected records:?\n[${checkedIds.join(", ")}]`);
+      if (userConfirmation) {
+        this.showFullScreenLoader();
+        const responses = await this.props.bulkDelete(checkedIds);
+        this.hideFullScreenLoader();
+        this.fillDatatable();
+      }
+    } else {
+      alert("Please select the records to be deleted");
+    }
+  }
+
 
   handleCloseModalClick(modalName) {
     if (modalName === 'addModal') {
@@ -187,6 +204,16 @@ class Crud extends React.Component {
         showViewRecordModal: false
       });
     }
+  }
+
+  getCheckedRecordsIds() {
+    const checkedIds = Object.keys(this.state.checkboxes).filter(key => {
+      if (this.state.checkboxes[key]) {
+        return key;
+      }
+    });
+
+    return checkedIds;
   }
   
   getSelectedRecordId(e) {
@@ -270,7 +297,7 @@ class Crud extends React.Component {
           typeOfButton="background" />
         <ButtonContainer>
           <ButtonPrimary title="Add Record" spacing='none' onClick={this.handleAddRecordModalClick} />
-          <ButtonPrimary title="Bulk Delete" spacing='none' />
+          <ButtonPrimary title="Bulk Delete" spacing='none' onClick={this.handleBulkDeletingButton} />
         </ButtonContainer>
 
         {!this.state.isDataLoaded &&
@@ -313,6 +340,7 @@ Crud.propTypes = {
   read: PropTypes.func,
   findById: PropTypes.func,
   delete: PropTypes.func,
+  bulkDelete: PropTypes.func, // only required if bulk deleting is enabled
   search: PropTypes.func.isRequired,
   actionButtons: PropTypes.bool,
   bulkDeleting: PropTypes.bool,

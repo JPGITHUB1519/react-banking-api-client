@@ -61,3 +61,13 @@ export const remove = async (id) => {
   return response.status;
 };
 
+export const bulkDelete = async (ids) => {
+  const promises = ids.map((id) => {
+    // returning promises to be used in promise all
+    return remove(id);
+  });
+
+  const responses = await Promise.all(promises);
+
+  return responses;
+};

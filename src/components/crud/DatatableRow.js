@@ -8,8 +8,8 @@ function DatatableRow(props) {
         <td>
           <input 
             type="checkbox" 
-            name={`checkbox${props.id}`} 
-            checked={props.checkboxes[`checkbox${props.id}`]} 
+            name={`${props.id}`} 
+            checked={props.checkboxes[`${props.id}`]} 
             onChange={props.onCheckboxValueChange}
           />
         </td>

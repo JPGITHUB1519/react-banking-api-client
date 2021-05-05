@@ -108,7 +108,7 @@ export const generateFieldsFromData = (data, fieldStringCase="camelCase") => {
       checkbox10: false
     }
 */
-export const generateCheckboxObject = (data, keyPrefix="checkbox", defaultValues=false) => {
+export const generateCheckboxObject = (data, keyPrefix="", defaultValues=false) => {
   const checkboxObject = {};
   data.forEach(record => {
     checkboxObject[`${keyPrefix}${record.id}`] = defaultValues;
