@@ -20,9 +20,17 @@ class TransactionForm extends React.Component {
       }
     };
 
+    // DOM element to use focus DOM method
+    this.initialInput = React.createRef();
+
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleAlertCloseClick = this.handleAlertCloseClick.bind(this);
+  }
+
+  componentDidMount() {
+    // focus on initial input
+    this.focusInitialInput();
   }
 
   handleInputChange(e) {
@@ -63,6 +71,8 @@ class TransactionForm extends React.Component {
             content: alertContent
           }
         });
+
+        this.clearForm();
       }
 
       if (transactionResult.transactionStatus === "failed") {
@@ -112,6 +122,20 @@ class TransactionForm extends React.Component {
     return errors;
   }
 
+  clearForm() {
+    this.setState({
+      amount: '',
+      transferorAccountId: '',
+      transfereeAccountId: '',
+    });
+
+    this.focusInitialInput();
+  }
+
+  focusInitialInput() {
+    this.initialInput.current.focus();
+  }
+
   showErrorAlert(errorsObject) {
     const alertContent = Utils.getObjectDetailsJSX(errorsObject);
 
@@ -131,15 +155,34 @@ class TransactionForm extends React.Component {
         <form className="form">
           <div className="form-group">
             <label>Amount</label>
-            <input className="form-input" type="number" name="amount" value={this.state.amount} onChange={this.handleInputChange} />
+            <input 
+              ref={this.initialInput}
+              className="form-input" 
+              type="number" 
+              name="amount" 
+              value={this.state.amount} 
+              onChange={this.handleInputChange}
+            />
           </div>
           <div className="form-group">
             <label>Transferor Account</label>
-            <input className="form-input" type="text" name="transferorAccountId" value={this.state.transferorAccount} onChange={this.handleInputChange} />
+            <input 
+              className="form-input" 
+              type="text"
+              name="transferorAccountId" 
+              value={this.state.transferorAccountId} 
+              onChange={this.handleInputChange} 
+            />
           </div>
           <div className="form-group">
             <label>Transferee Account</label>
-            <input className="form-input" type="text" name="transfereeAccountId" value={this.state.transfereeAccount} onChange={this.handleInputChange} />
+            <input 
+              className="form-input" 
+              type="text" 
+              name="transfereeAccountId" 
+              value={this.state.transfereeAccountId} 
+              onChange={this.handleInputChange} 
+            />
           </div>
           <ButtonPrimary title="Transfer" onClick={this.handleClick} />
         </form>
