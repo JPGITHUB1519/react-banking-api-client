@@ -70,7 +70,7 @@ class RecordDetails extends React.Component {
           onSearchClick={this.handleSearchClick} />
 
         {this.state.loading &&
-          <div class='loader-container'>
+          <div className='loader-container'>
             <Loader />
           </div>
         }

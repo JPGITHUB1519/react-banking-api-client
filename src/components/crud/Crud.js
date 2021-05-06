@@ -301,7 +301,7 @@ class Crud extends React.Component {
         </ButtonContainer>
 
         {!this.state.isDataLoaded &&
-          <div class='loader-container'>
+          <div className='loader-container'>
             <Loader />
           </div>
         }
