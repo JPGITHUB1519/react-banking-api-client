@@ -306,7 +306,10 @@ class Crud extends React.Component {
           typeOfButton="background" />
         <ButtonContainer>
           <ButtonPrimary title="Add Record" spacing='none' onClick={this.handleAddRecordModalClick} />
-          <ButtonPrimary title="Bulk Delete" spacing='none' onClick={this.handleBulkDeletingButton} />
+          
+          {this.props.bulkDeleting && 
+            <ButtonPrimary title="Bulk Delete" spacing='none' onClick={this.handleBulkDeletingButton} /> 
+          }
         </ButtonContainer>
 
         {!this.state.isDataLoaded &&
