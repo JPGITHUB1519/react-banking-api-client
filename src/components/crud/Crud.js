@@ -254,9 +254,18 @@ class Crud extends React.Component {
 
     let formFields = {};
 
-    if (this.state.data) {
-      formFields = this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data, 'camelCase');
+    // formFields = customFormFields or generate fields from the database columns
+    if (this.props.formFields) {
+      formFields = this.props.formFields;
+    } else {
+      if (this.state.data) {
+        formFields = Utils.generateFieldsFromData(this.state.data, 'camelCase');
+      }
     }
+
+    // if (this.state.data) {
+    //   formFields = this.props.formFields ? this.props.formFields : Utils.generateFieldsFromData(this.state.data, 'camelCase');
+    // }
 
     return (
       <div className="section" id={`${this.props.entityName}`}>
