@@ -10,9 +10,9 @@ export const getObjectDetailsJSX = (object) => {
   //   return <p className="object-detail"><strong>{key}: </strong>{object[key]}</p>;
   // });
 
-  const items = Object.keys(object).map(key => {
-    return <ObjectDetail title={key} value={object[key]} />
-  })
+  const items = Object.keys(object).map((key, index) => {
+    return <ObjectDetail key={index} title={key} value={object[key]} />
+  });
   return items;
 };
 

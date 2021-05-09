@@ -283,7 +283,7 @@ class CUFormModal extends React.Component {
     return (
       <Modal header={modalHeader} show={this.props.show} onCloseClick={this.handleCloseModalClick}>
         <form className="form">
-          {Object.keys(formFields).map(field => {
+          {Object.keys(formFields).map((field, index) => {
             // if the form is create, hide id field
             let disableField = formFields[field].disabled;
 
@@ -297,7 +297,7 @@ class CUFormModal extends React.Component {
             }
 
             return (
-              <div className="form-group"> 
+              <div className="form-group" key={index}> 
                 <label>{field}</label>
                 {/*
                 To avoid rendering undefined at the first render(component did mount is executed after the first render)

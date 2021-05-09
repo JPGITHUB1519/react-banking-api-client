@@ -67,8 +67,8 @@ class Datatable extends React.Component {
           <thead>
             <tr>
               {this.props.bulkDeleting && <th></th>}
-              {Object.keys(this.columns).map(column => {
-                return <th>{this.columns[column]}</th>
+              {Object.keys(this.columns).map((column, index) => {
+                return <th key={index}>{this.columns[column]}</th>
               })}
               {/* {this.props.columns.map(column => {
                 return <th>{column}</th>
@@ -81,6 +81,7 @@ class Datatable extends React.Component {
             {this.props.rows.map(row => {
               return (
                 <DatatableRow 
+                  key={row.id}
                   id={row.id} 
                   rowData={row} 
                   columns={this.columns}
