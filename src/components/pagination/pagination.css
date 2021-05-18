@@ -28,6 +28,8 @@
 .page-link--disabled {
   color: #6C757D;
   cursor: default;
+  /* important to disable js events */
+  pointer-events: none;
 }
 
 

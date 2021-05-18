@@ -55,6 +55,7 @@ class Crud extends React.Component {
     const response = await this.fillDatatable(null, 1);
   }
 
+  // refactor this in the future? nehh....
   async fillDatatable(searchText=null, page=null) {
     let data;
     let stateObject = {};
@@ -236,6 +237,33 @@ class Crud extends React.Component {
     this.setPageOnPagination(page, this.state.pagination.totalPages);
   }
 
+  getCheckedRecordsIds() {
+    const checkedIds = Object.keys(this.state.checkboxes).filter(key => {
+      if (this.state.checkboxes[key]) {
+        return key;
+      }
+    });
+
+    return checkedIds;
+  }
+  
+  getSelectedRecordId(e) {
+    const id = e.target.closest('tr').dataset.id;
+    return id;
+  }
+
+  showFullScreenLoader() {
+    this.setState({
+      showFullScreenLoader: true
+    });
+  }
+
+  hideFullScreenLoader() {
+    this.setState({
+      showFullScreenLoader: false
+    })
+  }
+
   previousPage() {
     let page = this.state.pagination.page;
 
@@ -275,6 +303,9 @@ class Crud extends React.Component {
       isNextEnabled = true;
     }
 
+    // fill datatable with page
+    this.fillDatatable(null,  page);
+
     this.setState({
       pagination: {
           ...this.state.pagination,
@@ -283,33 +314,6 @@ class Crud extends React.Component {
         isNextEnabled: isNextEnabled
       }
     });
-  }
-
-  getCheckedRecordsIds() {
-    const checkedIds = Object.keys(this.state.checkboxes).filter(key => {
-      if (this.state.checkboxes[key]) {
-        return key;
-      }
-    });
-
-    return checkedIds;
-  }
-  
-  getSelectedRecordId(e) {
-    const id = e.target.closest('tr').dataset.id;
-    return id;
-  }
-
-  showFullScreenLoader() {
-    this.setState({
-      showFullScreenLoader: true
-    });
-  }
-
-  hideFullScreenLoader() {
-    this.setState({
-      showFullScreenLoader: false
-    })
   }
 
   render() {
