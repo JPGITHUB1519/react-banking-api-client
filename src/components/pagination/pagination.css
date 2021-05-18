@@ -1,0 +1,54 @@
+.pagination-container {
+  margin-top: 15px;
+}
+
+.pagination {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+
+.page-item {
+}
+
+.page-link {
+  color: #e74c3c;
+  padding: 5px 15px;
+  border: 1px solid #d3d3d3;
+  text-decoration: none;
+}
+
+.page-link--active {
+  background: #e74c3c;
+  color: #fff;
+}
+
+.page-link--disabled {
+  color: #6C757D;
+  cursor: default;
+}
+
+
+/* 
+==========================================================================
+Responsive Media Queries
+========================================================================== 
+*/
+
+/* Medium devices (tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+
+}
+

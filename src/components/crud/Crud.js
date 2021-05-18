@@ -9,6 +9,7 @@ import ViewRecordModal from './ViewRecordModal';
 import FullScreenLoader from '../loader/FullScreenLoader';
 import Loader from '../loader/Loader';
 import NotResultsFound from '../NotResultsFound';
+import Pagination from '../pagination/Pagination';
 import * as Utils from '../../Utils';
 // import * as AccountApi from '../../api/AccountApi';
 
@@ -25,7 +26,13 @@ class Crud extends React.Component {
       showUpdateRecordModal: false,
       showViewRecordModal: false,
       showFullScreenLoader: false,
-      selectedRecord: {}
+      selectedRecord: {},
+      pagination: {
+        page: 1,
+        isPreviousEnabled: false,
+        isNextEnabled: true,
+        totalPages: 1
+      }
     };
 
     this.handleSearchValueChange = this.handleSearchValueChange.bind(this);
@@ -37,17 +44,20 @@ class Crud extends React.Component {
     this.handleDeleteActionButtonClick = this.handleDeleteActionButtonClick.bind(this);
     this.handleBulkDeletingButton = this.handleBulkDeletingButton.bind(this);
     this.handleCloseModalClick = this.handleCloseModalClick.bind(this);
+    this.handlePaginationPreviousClick = this.handlePaginationPreviousClick.bind(this);
+    this.handlePaginationNumberClick = this.handlePaginationNumberClick.bind(this);
+    this.handlePaginationNextClick = this.handlePaginationNextClick.bind(this);
     this.fillDatatable = this.fillDatatable.bind(this);
   }
 
   async componentDidMount() {
     // using get data method to fill the datatable
-    const response = await this.fillDatatable();
+    const response = await this.fillDatatable(null, 1);
   }
 
-  async fillDatatable(searchText=null) {
+  async fillDatatable(searchText=null, page=null) {
     let data;
-    let stateObject;
+    let stateObject = {};
 
     this.setState({
       isDataLoaded: false
@@ -55,7 +65,18 @@ class Crud extends React.Component {
 
     // if search text exists the method is called from the searchForm, else is called for the main CRUD component
     if (!searchText) {
-      data = await this.props.read();
+      // if page parameter is enabled, make a pagination result else get all the records
+      if (page) {
+        data = await this.props.read(page);
+        
+        // setting the total pages in state
+        stateObject.pagination = {
+          ...this.state.pagination,
+          totalPages: data.total_pages
+        }
+      } else {
+        data = await this.props.read();
+      }
     } else {
       data = await this.props.search(searchText);
     }
@@ -66,10 +87,8 @@ class Crud extends React.Component {
       data = [];
     }
 
-    stateObject = {
-      data: data,
-      isDataLoaded: true
-    };
+    stateObject.data = data;
+    stateObject.isDataLoaded = true;
 
     // if bulk deleting is enabled create checkboxes
     if (this.props.bulkDeleting) {
@@ -185,7 +204,6 @@ class Crud extends React.Component {
     }
   }
 
-
   handleCloseModalClick(modalName) {
     if (modalName === 'addModal') {
       this.setState({
@@ -204,6 +222,67 @@ class Crud extends React.Component {
         showViewRecordModal: false
       });
     }
+  }
+
+  handlePaginationPreviousClick(e) {
+    this.previousPage();
+  }
+
+  handlePaginationNextClick(e) {
+    this.nextPage();
+  }
+  
+  handlePaginationNumberClick(page) {
+    this.setPageOnPagination(page, this.state.pagination.totalPages);
+  }
+
+  previousPage() {
+    let page = this.state.pagination.page;
+
+    if (page > 1) {
+      page--;
+    }
+
+    this.setPageOnPagination(page, this.state.pagination.totalPages);
+  }
+
+  nextPage() {
+    let page = this.state.pagination.page;
+    const totalPages = this.state.pagination.totalPages;
+
+    if (page < totalPages) {
+      page++;
+    }
+
+    this.setPageOnPagination(page, totalPages);
+  }
+
+  setPageOnPagination(page, totalPages) {
+    let isPreviousEnabled;
+    let isNextEnabled;
+    
+    // check if previous should be enabled
+    if (page === 1) {
+      isPreviousEnabled = false
+    } else {
+      isPreviousEnabled = true;
+    }
+
+    // check if next should be enabled
+    if (page === totalPages) {
+      isNextEnabled = false;
+    } else {
+      isNextEnabled = true;
+    }
+
+    this.setState({
+      pagination: {
+          ...this.state.pagination,
+        page: page,
+        isPreviousEnabled: isPreviousEnabled,
+        isNextEnabled: isNextEnabled
+      }
+    });
   }
 
   getCheckedRecordsIds() {
@@ -337,6 +416,15 @@ class Crud extends React.Component {
           <NotResultsFound />
         }
         <FullScreenLoader show={this.state.showFullScreenLoader} />
+        <Pagination
+          totalPages={this.state.pagination.totalPages} 
+          activePage={this.state.pagination.page} 
+          isPreviousEnabled={this.state.pagination.isPreviousEnabled}
+          isNextEnabled={this.state.pagination.isNextEnabled}
+          onPreviousClick={this.handlePaginationPreviousClick}
+          onNextClick={this.handlePaginationNextClick}
+          onPageNumberClick={this.handlePaginationNumberClick}
+        />
       </div>
     );
   }

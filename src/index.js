@@ -4,6 +4,7 @@ import './components/card/card.css';
 import './components/alert/alert.css';
 import './components/modal/modal.css';
 import './components/crud/datatable.css';
+import './components/pagination/pagination.css'
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';

@@ -1,7 +1,13 @@
 import { API_URL } from './APIUtils';
 
-export const read = async () => {
-  const response = await fetch(`${API_URL}/accounts`);
+export const read = async (page=null) => {
+  let response;
+  if (page) {
+    response = await fetch(`${API_URL}/accounts?page=${page}`);
+  } else {
+    response = await fetch(`${API_URL}/accounts`);
+  }
+
   const json = await response.json();
   return json;
 }

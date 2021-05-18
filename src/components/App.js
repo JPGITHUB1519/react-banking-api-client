@@ -11,6 +11,7 @@ import * as AccountApi from '../api/AccountApi';
 import RecordCard from './RecordCard';
 import RecordDetails from './RecordDetails';
 import FullScreenLoader from './loader/FullScreenLoader';
+import Pagination from './pagination/Pagination'
 
 function App() {
   // const accountsData = [
@@ -78,6 +79,7 @@ function App() {
 
   return (
     <div className="app container">
+      {/* <Pagination totalPages={5} /> */}
       <TransactionForm />
       <RecordDetails entityName="Accounts" findById={AccountApi.findById} />
       <RecordDetails entityName="Customers" findById={CustomerApi.findById} />
