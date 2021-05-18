@@ -1,14 +1,22 @@
 import { API_URL } from './APIUtils';
 
-export async function read(page=null) {
+export async function read(page=null, perPage=null) {
   let response;
+
   // if page is enabled, make a paginated request
+  let url = `${API_URL}\\customers`;
+
   if (page) {
-    response = await fetch(`${API_URL}\\customers?page=${page}`);
-  } else {
-    response = await fetch(`${API_URL}\\customers`);
-  }
+    url = `${url}?page=${page}`;
+
+    if (perPage) {
+      url = `${url}&per_page=${perPage}`;
+    }
+  } 
+
+  response = await fetch(url);
   const json = await response.json();
+
   return json;
 }
 

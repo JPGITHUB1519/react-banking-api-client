@@ -52,7 +52,11 @@ class Crud extends React.Component {
 
   async componentDidMount() {
     // using get data method to fill the datatable
-    const response = await this.fillDatatable(null, 1);
+    if (this.props.pagination) {
+      this.fillDatatable(null, 1);
+    } else {
+      this.fillDatatable();
+    }
   }
 
   // refactor this in the future? nehh....
@@ -68,7 +72,7 @@ class Crud extends React.Component {
     if (!searchText) {
       // if page parameter is enabled, make a pagination result else get all the records
       if (page) {
-        data = await this.props.read(page);
+        data = await this.props.read(page, this.props.perPage);
         
         // setting the total pages in state
         stateObject.pagination = {
@@ -420,15 +424,18 @@ class Crud extends React.Component {
           <NotResultsFound />
         }
         <FullScreenLoader show={this.state.showFullScreenLoader} />
-        <Pagination
-          totalPages={this.state.pagination.totalPages} 
-          activePage={this.state.pagination.page} 
-          isPreviousEnabled={this.state.pagination.isPreviousEnabled}
-          isNextEnabled={this.state.pagination.isNextEnabled}
-          onPreviousClick={this.handlePaginationPreviousClick}
-          onNextClick={this.handlePaginationNextClick}
-          onPageNumberClick={this.handlePaginationNumberClick}
-        />
+
+        {this.props.pagination && 
+          <Pagination
+            totalPages={this.state.pagination.totalPages} 
+            activePage={this.state.pagination.page} 
+            isPreviousEnabled={this.state.pagination.isPreviousEnabled}
+            isNextEnabled={this.state.pagination.isNextEnabled}
+            onPreviousClick={this.handlePaginationPreviousClick}
+            onNextClick={this.handlePaginationNextClick}
+            onPageNumberClick={this.handlePaginationNumberClick}
+          />
+        }
       </div>
     );
   }
@@ -448,11 +455,15 @@ Crud.propTypes = {
   search: PropTypes.func.isRequired,
   actionButtons: PropTypes.bool,
   bulkDeleting: PropTypes.bool,
+  pagination: PropTypes.bool,
+  perPage: PropTypes.number
 };
 
 Crud.defaultProps = {
   actionButtons: true,
-  bulkDeleting: true
+  bulkDeleting: true,
+  pagination: true,
+  perPage: 10
 };
 
 export default Crud;                                                

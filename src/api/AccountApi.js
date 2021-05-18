@@ -1,13 +1,17 @@
 import { API_URL } from './APIUtils';
 
-export const read = async (page=null) => {
+export const read = async (page=null, perPage=null) => {
   let response;
-  if (page) {
-    response = await fetch(`${API_URL}/accounts?page=${page}`);
-  } else {
-    response = await fetch(`${API_URL}/accounts`);
-  }
+  let url = `${API_URL}/accounts`;
 
+  if (page) {
+    url = `${url}?page=${page}`;
+    if (perPage) {
+      url = `${url}&per_page=${perPage}`;
+    }
+  } 
+  
+  response = await fetch(url);
   const json = await response.json();
   return json;
 }

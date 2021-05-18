@@ -105,6 +105,8 @@ function App() {
         bulkDelete={CustomerApi.bulkDelete}
         actionButtons={true}
         bulkDeleting={true}
+        pagination={true}
+        perPage={5}
       />
 
       {/* using customColumns Map, extra buttons disabled */}
@@ -121,6 +123,8 @@ function App() {
         delete={AccountApi.remove}
         // actionButtons={false}
         bulkDeleting={false}
+        pagination={false}
+        // perPage={8}
         // search={CustomerApi.search} 
         />
     </div>
