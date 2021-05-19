@@ -48,18 +48,28 @@ class Crud extends React.Component {
     this.handlePaginationNumberClick = this.handlePaginationNumberClick.bind(this);
     this.handlePaginationNextClick = this.handlePaginationNextClick.bind(this);
     this.fillDatatable = this.fillDatatable.bind(this);
+    this.resetDatatable = this.resetDatatable.bind(this);
   }
 
   async componentDidMount() {
-    // using get data method to fill the datatable
+    this.resetDatatable();
+  }
+
+  // lifesaver method
+  // refill datatable and go to the first page if the pagination is enabled
+  // if pagination is not enabled, just fill the datatable
+  resetDatatable() {
     if (this.props.pagination) {
-      this.fillDatatable(null, 1);
+      this.setPageOnPagination(1);
     } else {
       this.fillDatatable();
     }
   }
 
   // refactor this in the future? nehh....
+  // fill the datatable, if not parameters is set get all the records
+  // if search text parameter is set, filter the data 
+  // if page paramer is set, fill the datatable with pagination at the specified page
   async fillDatatable(searchText=null, page=null) {
     let data;
     let stateObject = {};
@@ -129,13 +139,20 @@ class Crud extends React.Component {
   }
 
   async handleSearchClick() {
-    this.fillDatatable(this.state.searchText);
+    // if search text is empty, go to the first page
+    const searchText = this.state.searchText;
+    if (searchText) {
+      this.fillDatatable(this.state.searchText);
+    } else {
+      // if the pagination is not active, do the normal search
+      this.resetDatatable();
+    }
   }
 
   handleAddRecordModalClick() {
     this.setState({
       showCreateRecordModal: true
-    })
+    });
   }
 
   async handleEditActionButtonClick(e) {
@@ -182,7 +199,7 @@ class Crud extends React.Component {
       const deleteStatusCode = await this.props.delete(id);
 
       if (deleteStatusCode === 204) {
-        this.fillDatatable();
+        this.resetDatatable();
         // this message can be a little annoying, let's notify only when there is an error
         // alert(`${this.props.entityName} with id: ${id} deleted succesfully`);
       }
@@ -202,7 +219,7 @@ class Crud extends React.Component {
         this.showFullScreenLoader();
         const responses = await this.props.bulkDelete(checkedIds);
         this.hideFullScreenLoader();
-        this.fillDatatable();
+        this.resetDatatable();
       }
     } else {
       alert("Please select the records to be deleted");
@@ -238,7 +255,7 @@ class Crud extends React.Component {
   }
   
   handlePaginationNumberClick(page) {
-    this.setPageOnPagination(page, this.state.pagination.totalPages);
+    this.setPageOnPagination(page);
   }
 
   getCheckedRecordsIds() {
@@ -275,7 +292,7 @@ class Crud extends React.Component {
       page--;
     }
 
-    this.setPageOnPagination(page, this.state.pagination.totalPages);
+    this.setPageOnPagination(page);
   }
 
   nextPage() {
@@ -286,10 +303,11 @@ class Crud extends React.Component {
       page++;
     }
 
-    this.setPageOnPagination(page, totalPages);
+    this.setPageOnPagination(page);
   }
 
-  setPageOnPagination(page, totalPages) {
+  // set the actual page on the state and fill the datatable with the specified page
+  setPageOnPagination(page) {
     let isPreviousEnabled;
     let isNextEnabled;
     
@@ -301,7 +319,7 @@ class Crud extends React.Component {
     }
 
     // check if next should be enabled
-    if (page === totalPages) {
+    if (page === this.state.pagination.totalPages) {
       isNextEnabled = false;
     } else {
       isNextEnabled = true;
@@ -366,7 +384,9 @@ class Crud extends React.Component {
           // if the form fields is speficated use those, if not generate it automatically
           formFields={formFields} 
           fillDatatable={this.fillDatatable}
-          onCloseClick={this.handleCloseModalClick.bind(this, 'addModal')} />
+          onCloseClick={this.handleCloseModalClick.bind(this, 'addModal')} 
+          resetDatatable={this.resetDatatable}
+        />
         
         <CUFormModal
           action="update"
@@ -378,6 +398,7 @@ class Crud extends React.Component {
           show={this.state.showUpdateRecordModal}
           fillDatatable={this.fillDatatable}
           onCloseClick={this.handleCloseModalClick.bind(this, 'editModal')}
+          resetDatatable={this.resetDatatable}
         />
         {this.state.showViewRecordModal && 
           <ViewRecordModal 
