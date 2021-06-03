@@ -71,6 +71,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .button-container .button {
@@ -177,6 +178,10 @@ Responsive Media Queries
 
   .form-label {
     font-size: 17px;
+  }
+
+  .button-container {
+    margin-top: 0;
   }
 }
 
