@@ -1,0 +1,87 @@
+todo:
+  Crud:
+    input focus on edit and add modal
+    View Accounts on Customer View Modal (Custom View Modals Forms)
+    Reusable component for loader-container ??
+    Closing edit Modal with empty fields, fields remain empty ?? (only when selected the same record, not a bug??)
+
+
+  make one component with react hooks 
+  Add React Routing for each section of the page
+   handle API Errors
+
+  cleaning code
+  Documentation
+  deployment
+
+doing:
+  On search(filtering) filter data and add pagination to filtered data? or  Remove Pagination when filtering box has data
+
+  Implement pagination first and last buttons
+  Implement pagination dot points when there are too many pages
+
+  Fix pagination style on mobile -> mobile should be column each line (see bootstrap example)
+
+done:
+  Adding resetDatable helper method on Crud
+  After adding a new record, editing?, deleting or bulk deleting. Datatable should show go to the initial state (if pagination is enabled go to page 1 and update the data)
+  Empty search should be paginated, at first page (if pagination is active)
+
+  optional pagination prop on Crud 
+  perPage prop on Crud
+  Pagination?
+  Adding React Pagination
+  Adding backend API pagination
+  if bulk deleting is disabled, remove bulk delete button
+  Fix key errors
+  Clear Transaction from after transaction and using createRef to Focus on amount input
+  Fixing transaction form controlled input to match the correct state
+  Finishing CRUD
+  Implement Bulk Deleting functionality on CRUD 
+  Implement Delete single record via action button
+  Implementing view single record modal via action button
+  Reusable component for not found record
+  implementing global detail component to avoid code duplication
+  Implement GetJSXFromObject and replace every iteraction of getDOMString from object
+  Implement Edit Record Modal functionality on CRUD via action button
+  Adding loading spinner for slow ajax network calls on modals
+  Refactor fillDatatable method to include search results
+  show loading spinner when filling datatable
+  Implementing not found result on CRUD
+  Update datatable after adding, updating, deleting etc...
+  Add Entity name to CRUD Modals title (customers, accounts etc...)
+  Add Full Screen Loader Spinner on Edit Crud Action Button
+  Implement Add Record Modal Functionality ON CRUD
+  success / error alerts is preserving after closing modal addRecord Modal
+  Implement Validation on Add Record Form
+  Implementing Alerts on AddRecord modal
+  Refactoring Alert Component to allow html props and JSX Children props
+  Implementing caching on columns property for datatable
+  Implementing Search Data on account Crud
+  Implement datatable custom columns mapping that allows:
+    - Set which columns should appear and which not (black list and white list columns)
+    - Specify the order of columns in the Datatable
+    - Mapping a field to a custom title
+    - crud.props.columns -> customer columns   when not specified -> dynamic columns
+  adding dynamic columns for crud datatable
+  fixing search form controlled component dataflowing
+  bulk deleting checkboxes
+  implementing proptypes
+
+
+
+Limitations:
+  Forms fields are generated from custom fields or dinamically from the database columns
+
+  if we are dinamically generating :
+    There should be at least 1 record on the database
+    If the filtering is empty the fields cannot be generated 
+  
+  So I recommend using custom form fields instead of dynamically generating them
+  
+
+
+App Ideas:
+  username checker
+  all switch games directory
+  anime website
