@@ -144,7 +144,6 @@ class Crud extends React.Component {
     if (searchText) {
       this.fillDatatable(this.state.searchText);
     } else {
-      // if the pagination is not active, do the normal search
       this.resetDatatable();
     }
   }
@@ -446,7 +445,7 @@ class Crud extends React.Component {
         }
         <FullScreenLoader show={this.state.showFullScreenLoader} />
 
-        {this.props.pagination && 
+        {this.props.pagination &&
           <Pagination
             totalPages={this.state.pagination.totalPages} 
             activePage={this.state.pagination.page} 
