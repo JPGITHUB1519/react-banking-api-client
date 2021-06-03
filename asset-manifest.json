@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/react-banking-api-client/static/css/main.93682a12.chunk.css",
+    "main.js": "/react-banking-api-client/static/js/main.8150ae08.chunk.js",
+    "main.js.map": "/react-banking-api-client/static/js/main.8150ae08.chunk.js.map",
+    "runtime-main.js": "/react-banking-api-client/static/js/runtime-main.704c1c37.js",
+    "runtime-main.js.map": "/react-banking-api-client/static/js/runtime-main.704c1c37.js.map",
+    "static/js/2.3f55abe2.chunk.js": "/react-banking-api-client/static/js/2.3f55abe2.chunk.js",
+    "static/js/2.3f55abe2.chunk.js.map": "/react-banking-api-client/static/js/2.3f55abe2.chunk.js.map",
+    "static/js/3.66630425.chunk.js": "/react-banking-api-client/static/js/3.66630425.chunk.js",
+    "static/js/3.66630425.chunk.js.map": "/react-banking-api-client/static/js/3.66630425.chunk.js.map",
+    "index.html": "/react-banking-api-client/index.html",
+    "static/css/main.93682a12.chunk.css.map": "/react-banking-api-client/static/css/main.93682a12.chunk.css.map",
+    "static/js/2.3f55abe2.chunk.js.LICENSE.txt": "/react-banking-api-client/static/js/2.3f55abe2.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.704c1c37.js",
+    "static/js/2.3f55abe2.chunk.js",
+    "static/css/main.93682a12.chunk.css",
+    "static/js/main.8150ae08.chunk.js"
+  ]
+}
