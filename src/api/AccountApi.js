@@ -1,5 +1,6 @@
 import { API_URL } from './APIUtils';
 
+console.log(API_URL);
 export const read = async (page=null, perPage=null) => {
   let response;
   let url = `${API_URL}/accounts`;
