@@ -1,9 +1,11 @@
 export let API_URL;
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV) {
+  console.log('development');
   // development
   API_URL = 'http://localhost:8090/php-banking-api-test-gpcuaw/project/api';
 } else {
+  console.log('production');
   // production
   API_URL = 'https://php-banking-api.herokuapp.com/api';
 }
