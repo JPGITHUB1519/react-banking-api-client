@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# React Banking API Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[https://jpgithub1519.github.io/react-banking-api-client/](https://jpgithub1519.github.io/react-banking-api-client/)
+
+This is the React version of [Vanilla JS Banking Api Client](https://github.com/JPGITHUB1519/banking-api-client)
+
+
+## Deployment
+
+`npm run build`
 
 ## Available Scripts
 
