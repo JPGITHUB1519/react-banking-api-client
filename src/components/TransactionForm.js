@@ -160,6 +160,7 @@ class TransactionForm extends React.Component {
               className="form-input" 
               type="number" 
               name="amount" 
+              min="0"
               value={this.state.amount} 
               onChange={this.handleInputChange}
             />
