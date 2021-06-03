@@ -1,6 +1,7 @@
 export let API_URL;
 
-if (!process.env.NODE_ENV || process.env.NODE_ENV) {
+// checking if development or productions
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   console.log('development');
   // development
   API_URL = 'http://localhost:8090/php-banking-api-test-gpcuaw/project/api';
